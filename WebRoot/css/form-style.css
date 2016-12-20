@@ -1,0 +1,41 @@
+.form-div {
+	margin: 20px 10px;
+}
+
+#img .layui-upload-button {
+	background-color: rgba(0, 0, 0, .2);
+	color: rgba(255, 255, 255, 1);
+}
+
+#addsupervise .image img {
+	height: 10%;
+}
+#img img {
+	height: 10%;
+}
+span {
+	background-color: #d4d4d5;
+    color: black !important;
+}
+.layui-form-checkbox{
+	border: 1px solid black;
+}
+.layui-form-pane .layui-form-label {
+	background-color: #d4d4d5;
+	border: 1px solid black;
+}
+.layui-input, .layui-textarea{
+	    border: 1px solid black;
+}
+.layui-form-pane .layui-input-inline:hover input, textarea {
+	    border: 1px solid blue;
+}
+.form-div .ui .segment {
+	    border: 1px solid black;
+}
+#image_segment {
+	 border: 1px solid black;
+}
+#image_segment > .segment{
+	 border-left: 1px solid black;
+}

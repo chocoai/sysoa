@@ -1,0 +1,165 @@
+@media print {
+	#nav-top {
+		display: none;
+	}
+	.no-print {
+		display: none !important;
+	}
+	table td:nth-child(6) {
+		display: none;
+	}
+}
+
+body {
+	background-color: #DADADA;
+}
+
+body>.grid {
+	height: 100%;
+}
+
+.image {
+	
+}
+
+a {
+	color: #333;
+}
+
+.column {
+	max-width: 400px;
+}
+
+#con-lef {
+	margin: 1% 1%;
+}
+
+#con-rig {
+	margin: 1% 1%;
+}
+
+.card .content .close {
+	float: right;
+}
+.site-demo-upload {
+	width: 200px;
+	height: 200px;
+	border-radius: 100%;
+}
+
+.site-demo-upload img {
+	width: 200px;
+	height: 200px;
+	border-radius: 100%;
+}
+
+.site-demo-upload .site-demo-upbar {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -18px 0 0 -56px;
+}
+
+.site-con label {
+	width: 100px !important;
+}
+
+#layui-laypage-0 {
+	float: right;
+}
+
+#biuuu_city_list {
+	float: right;
+}
+
+#biuuu_city_list01 {
+	float: right;
+}
+
+#biuuu_city_list02 {
+	float: right;
+}
+
+#title-first p {
+	width: 335px;
+	max-width: 335px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+table tr p {
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+table {
+	border-color: #1b1c1d !important;
+}
+
+.table tr:hover td {
+	border-bottom-color: #ccc !important;
+	border-top-color: #ccc !important;
+}
+
+.container {
+	width: 100% !important;
+	background-color: #fff;
+}
+
+#title-second p {
+	width: 240;
+	max-width: 240px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.description p {
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.layui-quote-jg {
+	border-color: #FF5722;
+	border-style: solid;
+	border-width: 1px 1px 1px 5px;
+	background: 0 0;
+}
+
+.ui .table tr td, th {
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+}
+
+.ui .table tr th {
+	border-bottom: 1px solid black !important;
+}
+
+.ui.segment {
+	border: 1px solid black;
+}
+
+.ui.segment .layui-form-pane .layui-form-label {
+	background-color: #d4d4d5;
+	border: 1px solid black;
+}
+
+.ui.segment .layui-input, .layui-textarea {
+	border: 1px solid black;
+}
+
+.ui.horizontal.segments {
+	border: 1px solid black;
+}
+
+.ui.horizontal.segments>.segment {
+	border-left: 1px solid black;
+}
+
+.ui.menu {
+	border: 1px solid black;
+}
+.layui-tab-item .segment {
+	background-color: #d2d2d2;
+}

@@ -1,0 +1,429 @@
+Table: leader_info
+-----------------+--------------+------+-----+---------+---------
+ Field           | Type         | Null | Key | Default | Remarks 
+-----------------+--------------+------+-----+---------+---------
+ leaderid        | INT(10)      | NO   | PRI |         |         
+ leader_name     | VARCHAR(255) | YES  |     |         | 相关职位    
+ leader_position | VARCHAR(255) | YES  |     |         | 职务      
+ isdelete        | VARCHAR(5)   | YES  |     | 0       |         
+ leader_age      | VARCHAR(255) | YES  |     |         |         
+ leader_sex      | VARCHAR(255) | YES  |     |         |         
+-----------------+--------------+------+-----+---------+---------
+
+Table: leader_schedule
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ id          | INT(10)      | NO   | PRI |         |         
+ subject     | VARCHAR(255) | NO   |     |         |         
+ leaderid    | INT(10)      | NO   |     |         |         
+ userid      | INT(10)      | NO   |     |         |         
+ start       | DATETIME(19) | NO   |     |         |         
+ end         | DATETIME(19) | NO   |     |         |         
+ create_date | DATETIME(19) | NO   |     |         |         
+ sj_type     | VARCHAR(10)  | YES  |     | 0       | 事记类型   0 会议、1调研、2出差、3接待
+ isdelete    | VARCHAR(5)   | YES  |     | 0       |         
+-------------+--------------+------+-----+---------+---------
+
+Table: menu
+-------+-------------+------+-----+---------+---------
+ Field | Type        | Null | Key | Default | Remarks 
+-------+-------------+------+-----+---------+---------
+ id    | INT(10)     | NO   | PRI |         |         
+ name  | VARCHAR(32) | NO   |     |         |         
+ price | FLOAT(12)   | NO   |     |         |         
+ state | INT(10)     | NO   |     |         |         
+-------+-------------+------+-----+---------+---------
+
+Table: room
+---------------+-------------+------+-----+---------+---------
+ Field         | Type        | Null | Key | Default | Remarks 
+---------------+-------------+------+-----+---------+---------
+ id            | INT(10)     | NO   | PRI |         |         
+ name          | VARCHAR(32) | NO   |     |         |         
+ room_size     | VARCHAR(5)  | YES  |     |         | 会议室容纳人数（0[1~20] ，1[20~50], 2[50~80], 3[80以上]）
+ room_position | VARCHAR(32) | YES  |     |         |         
+ isdelete      | VARCHAR(1)  | YES  |     | 0       | 0 正常 1已停用
+---------------+-------------+------+-----+---------+---------
+
+Table: room_schedule
+----------------+--------------+------+-----+---------+---------
+ Field          | Type         | Null | Key | Default | Remarks 
+----------------+--------------+------+-----+---------+---------
+ id             | INT(10)      | NO   | PRI |         |         
+ subject        | VARCHAR(256) | NO   |     |         |         
+ app_reason     | VARCHAR(255) | YES  |     |         | 申请原因    
+ room_number    | INT(10)      | YES  |     | 10      | 参会人数    
+ roomid         | INT(10)      | NO   |     |         |         
+ userid         | INT(10)      | NO   |     |         |         
+ start          | DATETIME(19) | NO   |     |         |         
+ end            | DATETIME(19) | NO   |     |         |         
+ create_date    | DATETIME(19) | NO   |     |         |         
+ check_userid   | INT(10)      | YES  |     |         | 审批人     
+ apply_date     | DATETIME(19) | YES  |     |         | 审批时间    
+ room_sh_status | VARCHAR(5)   | YES  |     | 0       | 0 未审批 1已审批2 拒绝
+ room_idea      | VARCHAR(255) | YES  |     |         | 审批意见    
+----------------+--------------+------+-----+---------+---------
+
+Table: t_integrated_approval
+--------------------+--------------+------+-----+---------+---------
+ Field              | Type         | Null | Key | Default | Remarks 
+--------------------+--------------+------+-----+---------+---------
+ approval_id        | INT(10)      | NO   | PRI |         |         
+ integrated_info_id | INT(10)      | YES  |     |         |         
+ approval_status    | VARCHAR(255) | YES  |     | 0       |         
+ approval_idea      | VARCHAR(255) | YES  |     |         |         
+ cdate              | DATETIME(19) | YES  |     |         |         
+ cuser_id           | INT(10)      | YES  |     |         |         
+ cuser_name         | VARCHAR(255) | YES  |     |         |         
+ cuser_organiz_id   | INT(10)      | YES  |     |         |         
+ cuser_organiz_name | VARCHAR(255) | YES  |     |         |         
+--------------------+--------------+------+-----+---------+---------
+
+Table: t_integrated_handling
+--------------------+--------------+------+-----+---------+---------
+ Field              | Type         | Null | Key | Default | Remarks 
+--------------------+--------------+------+-----+---------+---------
+ handl_id           | INT(10)      | NO   | PRI |         |         
+ integrated_info_id | INT(10)      | YES  |     |         |         
+ handl_status       | VARCHAR(255) | YES  |     | 0       |         
+ handl_con          | VARCHAR(255) | YES  |     |         |         
+ cdate              | DATETIME(19) | YES  |     |         |         
+ cuser_id           | INT(10)      | YES  |     |         |         
+ cuser_name         | VARCHAR(255) | YES  |     |         |         
+ cuser_organiz_id   | INT(10)      | YES  |     |         |         
+ cuser_organiz_name | VARCHAR(255) | YES  |     |         |         
+--------------------+--------------+------+-----+---------+---------
+
+Table: t_integrated_info
+--------------------+--------------+------+-----+---------+---------
+ Field              | Type         | Null | Key | Default | Remarks 
+--------------------+--------------+------+-----+---------+---------
+ info_id            | INT(10)      | NO   | PRI |         |         
+ info_title         | VARCHAR(255) | YES  |     |         |         
+ info_con           | VARCHAR(255) | YES  |     |         |         
+ cdate              | DATETIME(19) | YES  |     |         |         
+ cuser_id           | INT(10)      | YES  |     |         |         
+ cuser_name         | VARCHAR(255) | YES  |     |         |         
+ cuser_organiz_id   | INT(10)      | YES  |     |         |         
+ cuser_organiz_name | VARCHAR(255) | YES  |     |         |         
+ isdelete           | VARCHAR(255) | YES  |     | 0       |         
+ isfinish           | VARCHAR(255) | YES  |     | 0       | 0 ---未完成 1---完成
+--------------------+--------------+------+-----+---------+---------
+
+Table: t_news_app
+--------------------+--------------+------+-----+---------+---------
+ Field              | Type         | Null | Key | Default | Remarks 
+--------------------+--------------+------+-----+---------+---------
+ app_id             | INT(10)      | NO   | PRI |         |         
+ app_title          | VARCHAR(255) | YES  |     |         | 新闻主题    
+ app_type           | VARCHAR(255) | YES  |     |         | 新闻类型（0文字新闻1图片新闻）
+ app_urls           | VARCHAR(255) | YES  |     |         | 上传的图片地址 
+ app_files          | VARCHAR(255) | YES  |     |         | 上传附件的地址 
+ app_content        | TEXT(65535)  | YES  |     |         | 新闻内容    
+ cuser_id           | INT(10)      | YES  |     |         |         
+ cuser_name         | VARCHAR(255) | YES  |     |         |         
+ cdate              | DATETIME(19) | YES  |     |         |         
+ cuser_organiz_name | VARCHAR(255) | YES  |     |         |         
+ cuser_organiz_id   | INT(10)      | YES  |     |         |         
+ isdelete           | VARCHAR(255) | YES  |     | 0       |         
+--------------------+--------------+------+-----+---------+---------
+
+Table: t_news_approval
+------------------------+--------------+------+-----+---------+---------
+ Field                  | Type         | Null | Key | Default | Remarks 
+------------------------+--------------+------+-----+---------+---------
+ approval_id            | INT(10)      | NO   | PRI |         |         
+ news_app_id            | INT(10)      | YES  |     |         |         
+ approval_flag1         | VARCHAR(255) | YES  |     | 0       | 管理员审批标志 
+ approval_flag1_con     | VARCHAR(255) | YES  |     |         | 管理员审批意见 
+ approval_flag1_user_id | INT(10)      | YES  |     |         |         
+ approval_flag1_cdate   | DATETIME(19) | YES  |     |         |         
+ approval_flag2         | VARCHAR(255) | YES  |     | 0       | 领导审批标志  
+ approval_flag2_con     | VARCHAR(255) | YES  |     |         | 领导审批意见  
+ approval_flag2_user_id | INT(10)      | YES  |     |         |         
+ approval_flag2_cdate   | DATETIME(19) | YES  |     |         |         
+ cdate                  | DATETIME(19) | YES  |     |         |         
+ cuser_id               | INT(10)      | YES  |     |         |         
+ cuser_name             | VARCHAR(255) | YES  |     |         |         
+ cuser_organiz_id       | INT(10)      | YES  |     |         |         
+------------------------+--------------+------+-----+---------+---------
+
+Table: t_recp_apply
+-----------------------+--------------+------+-----+---------+---------
+ Field                 | Type         | Null | Key | Default | Remarks 
+-----------------------+--------------+------+-----+---------+---------
+ apply_id              | INT(10)      | NO   | PRI |         |         
+ persion_name          | VARCHAR(255) | NO   |     |         | 接待人姓名   
+ persion_position      | VARCHAR(255) | NO   |     |         | 接待人职务   
+ persion_depart        | VARCHAR(255) | NO   |     |         | 所属部门    
+ persion_purpose_tolz  | VARCHAR(255) | NO   |     |         | 来兰州的目的  
+ persion_start_time    | DATETIME(19) | YES  |     |         | 来兰州的时间  
+ persion_end_time      | DATETIME(19) | YES  |     |         | 离开时间    
+ persion_end_time_true | DATETIME(19) | YES  |     |         | 真实离开时间  
+ recp_flag             | VARCHAR(255) | YES  |     |         | 接待标志(0.业务部门接待 1.办公室牵头接待)
+ approval_flag         | VARCHAR(255) | YES  |     | 0       | 审批标志(0.未审批 1.已审批)
+ approval_con          | VARCHAR(255) | YES  |     |         |         
+ finish_flag           | VARCHAR(255) | YES  |     | 0       | 接待完成标志(0.未完成 1.已接待完成)
+ cdate                 | DATETIME(19) | YES  |     |         |         
+ cuser_name            | VARCHAR(255) | YES  |     |         |         
+ cuser_id              | INT(10)      | YES  |     |         |         
+ cuser_organiz_id      | INT(10)      | YES  |     |         |         
+ isdelete              | VARCHAR(255) | YES  |     | 0       |         
+-----------------------+--------------+------+-----+---------+---------
+
+Table: t_recp_feed
+--------------+--------------+------+-----+---------+---------
+ Field        | Type         | Null | Key | Default | Remarks 
+--------------+--------------+------+-----+---------+---------
+ feed_id      | INT(10)      | NO   | PRI |         |         
+ require_id   | INT(10)      | YES  |     |         | 要求表id   
+ feed_con     | VARCHAR(255) | YES  |     |         | 反馈内容    
+ feed_organiz | VARCHAR(255) | YES  |     |         | 反馈机构    
+ feed_status  | VARCHAR(255) | YES  |     | 0       | 反馈状态 （0 未读，1通过）
+ cdate        | DATETIME(19) | YES  |     |         |         
+ cuser_id     | INT(10)      | YES  |     |         |         
+ cuser_name   | VARCHAR(255) | YES  |     |         |         
+--------------+--------------+------+-----+---------+---------
+
+Table: t_recp_require
+----------------------+--------------+------+-----+---------+---------
+ Field                | Type         | Null | Key | Default | Remarks 
+----------------------+--------------+------+-----+---------+---------
+ require_id           | INT(10)      | NO   | PRI |         |         
+ require_trip         | VARCHAR(255) | YES  |     |         | 行程安排    
+ require_users        | VARCHAR(255) | YES  |     |         | 陪同人员    
+ require_cars         | VARCHAR(255) | YES  |     |         | 用车要求    
+ require_live         | VARCHAR(255) | YES  |     |         | 住宿要求    
+ require_route        | VARCHAR(255) | YES  |     |         | 行车路线    
+ confirm_flag         | VARCHAR(255) | YES  |     | 0       | 确认标志（0.未确认 1.有意见 2.已确认）
+ require_user_organiz | VARCHAR(255) | YES  |     |         | 要求下发的机构 
+ cdate                | DATETIME(19) | YES  |     |         | 创建日期    
+ cuser_id             | INT(10)      | YES  |     |         |         
+ cuser_name           | VARCHAR(255) | YES  |     |         |         
+ recp_apply_id        | INT(10)      | YES  |     |         | 申请单id   
+----------------------+--------------+------+-----+---------+---------
+
+Table: t_supervise_info
+--------------------+--------------+------+-----+---------+---------
+ Field              | Type         | Null | Key | Default | Remarks 
+--------------------+--------------+------+-----+---------+---------
+ info_id            | INT(10)      | NO   | PRI |         |         
+ info_type          | VARCHAR(255) | YES  |     |         | 批示文件类型  
+ info_title         | VARCHAR(255) | YES  |     |         | 来文简要内容  
+ info_con           | TEXT(65535)  | YES  |     |         | 领导批示内容及要求
+ info_sno           | VARCHAR(255) | YES  |     |         | 批示文件编号  
+ info_img_url       | TEXT(65535)  | YES  |     |         | 批示件扫描（图片）
+ rec_sno            | VARCHAR(255) | YES  |     |         | 来文原号    
+ rec_organiz_id     | INT(10)      | YES  |     |         |         
+ rec_time           | DATETIME(19) | YES  |     |         | 收文时间    
+ isfinish           | VARCHAR(255) | YES  |     | 0       | 0  1已下发   2已完成
+ cdate              | DATETIME(19) | YES  |     |         |         
+ cuser_id           | INT(10)      | YES  |     |         |         
+ cuser_name         | VARCHAR(255) | YES  |     |         |         
+ cuser_organiz_id   | INT(10)      | YES  |     |         |         
+ cuser_organiz_name | VARCHAR(255) | YES  |     |         |         
+ isdelete           | VARCHAR(255) | YES  |     | 0       |         
+--------------------+--------------+------+-----+---------+---------
+
+Table: t_supervise_progress
+--------------------+--------------+------+-----+---------+---------
+ Field              | Type         | Null | Key | Default | Remarks 
+--------------------+--------------+------+-----+---------+---------
+ progress_id        | INT(10)      | NO   | PRI |         |         
+ progress_status    | VARCHAR(255) | YES  |     |         | 办理情况    
+ supervise_info_id  | INT(10)      | YES  |     |         |         
+ udate              | DATETIME(19) | YES  |     |         |         
+ uuser_id           | INT(10)      | YES  |     |         |         
+ uuser_name         | VARCHAR(255) | YES  |     |         |         
+ uuser_organiz_name | VARCHAR(255) | YES  |     |         |         
+ uuser_organiz_id   | INT(10)      | YES  |     |         |         
+--------------------+--------------+------+-----+---------+---------
+
+Table: t_supervise_progress_info
+-----------------------+--------------+------+-----+---------+---------
+ Field                 | Type         | Null | Key | Default | Remarks 
+-----------------------+--------------+------+-----+---------+---------
+ progress_info_id      | INT(10)      | NO   | PRI |         |         
+ supervise_progress_id | INT(10)      | YES  |     |         |         
+ progress_info_con     | VARCHAR(255) | YES  |     |         |         
+ progress_info_status  | VARCHAR(255) | YES  |     |         |         
+ cdate                 | DATETIME(19) | YES  |     |         |         
+ cuser_id              | INT(10)      | YES  |     |         |         
+ cuser_name            | VARCHAR(255) | YES  |     |         |         
+ cuser_organiz_id      | INT(10)      | YES  |     |         |         
+ cuser_organiz_name    | VARCHAR(255) | YES  |     |         |         
+-----------------------+--------------+------+-----+---------+---------
+
+Table: t_supervise_progress_info_apply
+-------------------------+--------------+------+-----+---------+---------
+ Field                   | Type         | Null | Key | Default | Remarks 
+-------------------------+--------------+------+-----+---------+---------
+ progress_info_apply_id  | INT(10)      | NO   | PRI |         |         
+ progress_info_id        | INT(10)      | YES  |     |         |         
+ apply_status            | VARCHAR(255) | YES  |     |         |         
+ apply_date              | DATETIME(19) | YES  |     |         |         
+ apply_user_id           | INT(10)      | YES  |     |         |         
+ apply_user_name         | VARCHAR(255) | YES  |     |         |         
+ apply_user_organiz_id   | INT(10)      | YES  |     |         |         
+ apply_user_organiz_name | VARCHAR(255) | YES  |     |         |         
+-------------------------+--------------+------+-----+---------+---------
+
+Table: t_supervise_require
+----------------------+--------------+------+-----+---------+---------
+ Field                | Type         | Null | Key | Default | Remarks 
+----------------------+--------------+------+-----+---------+---------
+ dbrequire_id         | INT(10)      | NO   | PRI |         |         
+ require_organiz_id   | VARCHAR(255) | YES  |     |         | 要求办理单位  
+ require_finish_limit | VARCHAR(255) | YES  |     |         | 办理期限    
+ supervise_info_id    | INT(10)      | YES  |     |         |         
+ cdate                | DATETIME(19) | YES  |     |         |         
+ cuser_id             | INT(10)      | YES  |     |         |         
+ cuser_organiz_id     | INT(10)      | YES  |     |         |         
+ cuser_organiz_name   | VARCHAR(255) | YES  |     |         |         
+----------------------+--------------+------+-----+---------+---------
+
+Table: t_user_employer
+--------------------+--------------+------+-----+---------+---------
+ Field              | Type         | Null | Key | Default | Remarks 
+--------------------+--------------+------+-----+---------+---------
+ id                 | INT(10)      | NO   | PRI |         | id      
+ user_employer_name | VARCHAR(200) | NO   |     |         | 单位名称    
+ user_employer_type | VARCHAR(200) | YES  |     |         | 预留字段    
+ cdate              | DATETIME(19) | NO   |     |         | 创建时间    
+ cuser_id           | INT(10)      | NO   |     |         | 创建人id   
+ cuser_name         | VARCHAR(200) | NO   |     |         | 创建人姓名   
+--------------------+--------------+------+-----+---------+---------
+
+Table: t_user_menu
+---------------------+--------------+------+-----+---------+---------
+ Field               | Type         | Null | Key | Default | Remarks 
+---------------------+--------------+------+-----+---------+---------
+ id                  | INT(10)      | NO   | PRI |         | id      
+ user_menu_title     | VARCHAR(200) | NO   |     |         | 菜单名称    
+ user_menu_url       | VARCHAR(200) | YES  |     | --      | 菜单地址    
+ user_menu_sn        | CHAR(2)      | NO   |     | 01      | 菜单序号    
+ user_menu_type      | CHAR(6)      | NO   |     | 100001  | 菜单类型    
+ user_menu_parent_id | INT(10)      | NO   |     | 0       | 菜单父id   
+ cdate               | DATETIME(19) | NO   |     |         | 创建时间    
+ cuser_name          | VARCHAR(200) | NO   |     |         | 创建人姓名   
+ cuser_id            | INT(10)      | NO   |     |         | 创建人id   
+---------------------+--------------+------+-----+---------+---------
+
+Table: t_user_message
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ message_id  | INT(10)      | NO   | PRI |         |         
+ message_con | VARCHAR(255) | YES  |     |         | 消息内容    
+ receive_id  | INT(10)      | YES  |     |         | 接收人（0代表发给管理员的消息）
+ isread      | VARCHAR(5)   | YES  |     | 0       | 0 未读，1 已读
+ cdate       | DATETIME(19) | YES  |     |         | 创建时间    
+ cuser_name  | VARCHAR(255) | YES  |     |         | 创建人     
+ cuser_id    | INT(10)      | YES  |     |         |         
+ isdelete    | VARCHAR(5)   | YES  |     | 0       | 0可用1已删除 
+-------------+--------------+------+-----+---------+---------
+
+Table: t_user_organiz
+-------------------+--------------+------+-----+---------+---------
+ Field             | Type         | Null | Key | Default | Remarks 
+-------------------+--------------+------+-----+---------+---------
+ id                | INT(10)      | NO   | PRI |         | id      
+ user_organiz_name | VARCHAR(200) | NO   |     |         | 机构名称    
+ user_organiz_type | VARCHAR(200) | YES  |     |         | 预留字段    
+ cdate             | DATETIME(19) | NO   |     |         | 创建时间    
+ cuser_id          | INT(10)      | NO   |     |         | 创建人id   
+ cuser_name        | VARCHAR(200) | NO   |     |         | 创建人姓名   
+-------------------+--------------+------+-----+---------+---------
+
+Table: t_user_organiz_employer
+-------------------+--------------+------+-----+---------+---------
+ Field             | Type         | Null | Key | Default | Remarks 
+-------------------+--------------+------+-----+---------+---------
+ id                | INT(10)      | NO   | PRI |         | id      
+ user_organiz_id   | INT(10)      | NO   |     |         | 机构id    
+ user_employer_id  | INT(10)      | NO   |     |         | 单位id    
+ user_organiz_name | VARCHAR(200) | NO   |     |         | 机构名     
+ cdate             | DATETIME(19) | NO   |     |         | 创建时间    
+ cuser_id          | INT(10)      | NO   |     |         | 创建人id   
+ cuser_name        | VARCHAR(200) | NO   |     |         | 创建人姓名   
+-------------------+--------------+------+-----+---------+---------
+
+Table: t_user_organiz_user
+-----------------+--------------+------+-----+---------+---------
+ Field           | Type         | Null | Key | Default | Remarks 
+-----------------+--------------+------+-----+---------+---------
+ id              | INT(10)      | NO   | PRI |         | id      
+ user_organiz_id | INT(10)      | NO   |     |         | 机构id    
+ user_user_id    | INT(10)      | NO   |     |         | 用户id    
+ user_user_name  | VARCHAR(200) | NO   |     |         | 用户姓名    
+ cdate           | DATETIME(19) | NO   |     |         | 创建时间    
+ cuser_id        | INT(10)      | NO   |     |         | 创建人id   
+ cuser_name      | VARCHAR(200) | NO   |     |         | 创建人姓名   
+-----------------+--------------+------+-----+---------+---------
+
+Table: t_user_role
+---------------------+--------------+------+-----+---------+---------
+ Field               | Type         | Null | Key | Default | Remarks 
+---------------------+--------------+------+-----+---------+---------
+ id                  | INT(10)      | NO   | PRI |         | id      
+ user_role_name      | VARCHAR(200) | NO   |     |         | 角色名称    
+ user_role_login_url | VARCHAR(200) | NO   |     |         | 角色跳转地址  
+ cdate               | DATETIME(19) | NO   |     |         | 创建时间    
+ cuser_id            | INT(10)      | NO   |     |         | 创建人id   
+ cuser_name          | VARCHAR(200) | NO   |     |         | 创建人姓名   
+---------------------+--------------+------+-----+---------+---------
+
+Table: t_user_role_menu
+---------------+--------------+------+-----+---------+---------
+ Field         | Type         | Null | Key | Default | Remarks 
+---------------+--------------+------+-----+---------+---------
+ id            | INT(10)      | NO   | PRI |         | id      
+ user_role_id  | INT(10)      | NO   |     |         | 角色id    
+ user_menu_id  | INT(10)      | NO   |     |         | 菜单id    
+ user_menu_url | VARCHAR(200) | NO   |     |         | 菜单url   
+ cdate         | DATETIME(19) | NO   |     |         | 创建时间    
+ cuser_id      | INT(10)      | NO   |     |         | 创建人id   
+ cuser_name    | VARCHAR(200) | NO   |     |         | 创建人姓名   
+---------------+--------------+------+-----+---------+---------
+
+Table: t_user_role_user
+----------------+--------------+------+-----+---------+---------
+ Field          | Type         | Null | Key | Default | Remarks 
+----------------+--------------+------+-----+---------+---------
+ id             | INT(10)      | NO   | PRI |         | id      
+ user_role_id   | INT(10)      | NO   |     |         | 角色id    
+ user_user_id   | INT(10)      | NO   |     |         | 用户id    
+ user_user_name | VARCHAR(200) | NO   |     |         | 用户姓名    
+ cdate          | DATETIME(19) | NO   |     |         | 创建时间    
+ cuser_id       | INT(10)      | NO   |     |         | 创建人id   
+ cuser_name     | VARCHAR(200) | NO   |     |         | 创建人姓名   
+----------------+--------------+------+-----+---------+---------
+
+Table: user
+------------+--------------+------+-----+---------+---------
+ Field      | Type         | Null | Key | Default | Remarks 
+------------+--------------+------+-----+---------+---------
+ id         | INT(10)      | NO   | PRI |         | userid  
+ name       | VARCHAR(8)   | NO   |     |         | 用户名     
+ loginName  | VARCHAR(32)  | NO   |     |         | 登录名     
+ password   | VARCHAR(255) | NO   |     |         | 密码      
+ tel        | VARCHAR(14)  | NO   |     |         | 电话      
+ email      | VARCHAR(32)  | NO   |     |         | 电子邮件    
+ cdate      | DATETIME(19) | NO   |     |         | 创建日期    
+ cuser_id   | INT(10)      | NO   |     |         | 创建人id   
+ cuser_name | VARCHAR(255) | NO   |     |         | 创建人名    
+------------+--------------+------+-----+---------+---------
+
+Table: user_menu
+-------------+--------------+------+-----+---------+---------
+ Field       | Type         | Null | Key | Default | Remarks 
+-------------+--------------+------+-----+---------+---------
+ id          | INT(10)      | NO   | PRI |         |         
+ userid      | INT(10)      | NO   |     |         |         
+ menuid      | INT(10)      | NO   |     |         |         
+ state       | INT(10)      | NO   |     |         |         
+ order_date  | DATETIME(19) | NO   |     |         |         
+ create_date | DATETIME(19) | NO   |     |         |         
+-------------+--------------+------+-----+---------+---------
+
