@@ -65,12 +65,20 @@ public abstract class BaseSuperviseInfo<M extends BaseSuperviseInfo<M>> extends 
 		return get("rec_sno");
 	}
 
-	public void setRecOrganizId(java.lang.Integer recOrganizId) {
+	public void setRecOrganizId(java.lang.String recOrganizId) {
 		set("rec_organiz_id", recOrganizId);
 	}
 
-	public java.lang.Integer getRecOrganizId() {
+	public java.lang.String getRecOrganizId() {
 		return get("rec_organiz_id");
+	}
+
+	public void setInfoApprovalType(java.lang.String infoApprovalType) {
+		set("info_approval_type", infoApprovalType);
+	}
+
+	public java.lang.String getInfoApprovalType() {
+		return get("info_approval_type");
 	}
 
 	public void setRecTime(java.util.Date recTime) {

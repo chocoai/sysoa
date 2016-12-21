@@ -118,6 +118,7 @@ function _render() {
         }
     });
     $('#type').html('文件类型：' + formartDic(info_type, 'CODE_EVENT_SUPERVISE'));
+    $('#rec_org_id').html('来文单位：'+formartDic($('#rec_org_id').html(), 'CODE_REC_ORGANIZS'));
 }
 
 function haveDate(st, limit) {

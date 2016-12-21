@@ -129,4 +129,50 @@ public class Contans {
 	 */
 	public static final String[] REPORT_MATERIAL_TYPE = new String[]{REPORT_MATERIAL_TYPE_01, REPORT_MATERIAL_TYPE_02, REPORT_MATERIAL_TYPE_03};
 	public static final String CODE_REPORT_MATERIAL_TYPE = "CODE_REPORT_MATERIAL_TYPE";
+	
+	/**
+	 * 省市领导批示
+	 */
+	public static final String  LEADER_APPROVAL_TYPE_01 = "LEADER_APPROVAL_TYPE_01";
+	/**
+	 * 肖局长批示
+	 */
+	public static final String  LEADER_APPROVAL_TYPE_02 = "LEADER_APPROVAL_TYPE_02";
+	/**
+	 * 领导批示类型
+	 */
+	public static final String[]  LEADER_APPROVAL_TYPE = new String[]{LEADER_APPROVAL_TYPE_01, LEADER_APPROVAL_TYPE_02};
+	public static final String  CODE_LEADER_APPROVAL_TYPE = "CODE_LEADER_APPROVAL_TYPE";
+	
+	
+	public static final String  REC_ORGANIZS_01 = "REC_ORGANIZS_01";
+	public static final String  REC_ORGANIZS_02 = "REC_ORGANIZS_02";
+	public static final String  REC_ORGANIZS_03 = "REC_ORGANIZS_03";
+	public static final String  REC_ORGANIZS_04 = "REC_ORGANIZS_04";
+	public static final String  REC_ORGANIZS_05 = "REC_ORGANIZS_05";
+	public static final String  REC_ORGANIZS_06 = "REC_ORGANIZS_06";
+	public static final String  REC_ORGANIZS_07 = "REC_ORGANIZS_07";
+	public static final String  REC_ORGANIZS_08 = "REC_ORGANIZS_08";
+	public static final String  REC_ORGANIZS_09 = "REC_ORGANIZS_09";
+	public static final String  REC_ORGANIZS_10 = "REC_ORGANIZS_10";
+	public static final String  REC_ORGANIZS_11 = "REC_ORGANIZS_11";
+	public static final String  REC_ORGANIZS_12 = "REC_ORGANIZS_12";
+	public static final String  REC_ORGANIZS_13 = "REC_ORGANIZS_13";
+	public static final String  REC_ORGANIZS_14 = "REC_ORGANIZS_14";
+	public static final String  REC_ORGANIZS_15 = "REC_ORGANIZS_15";
+	public static final String  REC_ORGANIZS_16 = "REC_ORGANIZS_16";
+	public static final String  REC_ORGANIZS_17 = "REC_ORGANIZS_17";
+	public static final String  REC_ORGANIZS_18 = "REC_ORGANIZS_18";
+	public static final String  REC_ORGANIZS_19 = "REC_ORGANIZS_19";
+	public static final String  REC_ORGANIZS_20 = "REC_ORGANIZS_20";
+	public static final String  REC_ORGANIZS_21 = "REC_ORGANIZS_21";
+	public static final String  REC_ORGANIZS_22 = "REC_ORGANIZS_22";
+	public static final String  REC_ORGANIZS_23 = "REC_ORGANIZS_23";
+	public static final String  REC_ORGANIZS_24 = "REC_ORGANIZS_24";
+	
+	public static final String[]  REC_ORGANIZS = new String[]{REC_ORGANIZS_01,REC_ORGANIZS_02,REC_ORGANIZS_03,REC_ORGANIZS_04,REC_ORGANIZS_05,
+			REC_ORGANIZS_06,REC_ORGANIZS_07,REC_ORGANIZS_08,REC_ORGANIZS_09,REC_ORGANIZS_10,REC_ORGANIZS_11,REC_ORGANIZS_12,REC_ORGANIZS_13,
+			REC_ORGANIZS_14,REC_ORGANIZS_15,REC_ORGANIZS_16,REC_ORGANIZS_17,REC_ORGANIZS_18,REC_ORGANIZS_19,REC_ORGANIZS_20,REC_ORGANIZS_21,
+			REC_ORGANIZS_22,REC_ORGANIZS_23,REC_ORGANIZS_24};
+	public static final String  CODE_REC_ORGANIZS="CODE_REC_ORGANIZS";
 }

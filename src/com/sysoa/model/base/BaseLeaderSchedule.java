@@ -25,6 +25,14 @@ public abstract class BaseLeaderSchedule<M extends BaseLeaderSchedule<M>> extend
 		return get("subject");
 	}
 
+	public void setSchPosition(java.lang.String schPosition) {
+		set("sch_position", schPosition);
+	}
+
+	public java.lang.String getSchPosition() {
+		return get("sch_position");
+	}
+
 	public void setLeaderid(java.lang.Integer leaderid) {
 		set("leaderid", leaderid);
 	}

@@ -49,6 +49,14 @@ public abstract class BaseRecpFeed<M extends BaseRecpFeed<M>> extends Model<M> i
 		return get("feed_status");
 	}
 
+	public void setFeedIdea(java.lang.String feedIdea) {
+		set("feed_idea", feedIdea);
+	}
+
+	public java.lang.String getFeedIdea() {
+		return get("feed_idea");
+	}
+
 	public void setCdate(java.util.Date cdate) {
 		set("cdate", cdate);
 	}

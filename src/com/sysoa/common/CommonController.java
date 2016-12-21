@@ -9,6 +9,7 @@ import com.jfinal.aop.Clear;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.PathKit;
 import com.jfinal.plugin.activerecord.Page;
+import com.sysoa.model.data.RecOrganiz;
 import com.sysoa.news.model.AppModel;
 import com.sysoa.supervise.model.SuperviseInfo;
 import com.sysoa.supervise.model.SuperviseProgressInfo;
@@ -284,7 +285,8 @@ public class CommonController extends Controller {
 		
 		setAttr("type", QPropertiesUtil.list(Contans.EVENT_SUPERVISE));
 		setAttr("limit", QPropertiesUtil.list(Contans.HANDLE_LIMIT));
-	//	setAttr("organiz", );
+		setAttr("app_type", QPropertiesUtil.list(Contans. LEADER_APPROVAL_TYPE));
+		setAttr("rec_organiz", QPropertiesUtil.list(Contans. REC_ORGANIZS));
 		render("form/add_supervise_form.jsp");
 	}
 	public void goupdSupervise(){
@@ -400,6 +402,10 @@ public class CommonController extends Controller {
 			
 			sr = Contans.REPORT_MATERIAL_TYPE;
 			
+		}else if(Contans.CODE_REC_ORGANIZS.equals(ss)){
+			
+			sr = Contans.REC_ORGANIZS;
+			
 		}
 		li = QPropertiesUtil.list(sr);
 		
@@ -409,6 +415,12 @@ public class CommonController extends Controller {
 	public void dicOrganiz(){
 		
 		renderJson(UserOrganizModel.dao.findAll(null));
+		
+	}
+	
+	public void dicRecOrganiz(){
+		
+		renderJson(RecOrganiz.dao.findAll(null));
 		
 	}
 }

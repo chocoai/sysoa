@@ -25,12 +25,36 @@ public abstract class BaseSuperviseProgressInfo<M extends BaseSuperviseProgressI
 		return get("supervise_progress_id");
 	}
 
+	public void setProgressInfoUrlType(java.lang.String progressInfoUrlType) {
+		set("progress_info_url_type", progressInfoUrlType);
+	}
+
+	public java.lang.String getProgressInfoUrlType() {
+		return get("progress_info_url_type");
+	}
+
+	public void setProgressInfoUrl(java.lang.String progressInfoUrl) {
+		set("progress_info_url", progressInfoUrl);
+	}
+
+	public java.lang.String getProgressInfoUrl() {
+		return get("progress_info_url");
+	}
+
 	public void setProgressInfoCon(java.lang.String progressInfoCon) {
 		set("progress_info_con", progressInfoCon);
 	}
 
 	public java.lang.String getProgressInfoCon() {
 		return get("progress_info_con");
+	}
+
+	public void setProgressInfoImg(java.lang.String progressInfoImg) {
+		set("progress_info_img", progressInfoImg);
+	}
+
+	public java.lang.String getProgressInfoImg() {
+		return get("progress_info_img");
 	}
 
 	public void setProgressInfoStatus(java.lang.String progressInfoStatus) {

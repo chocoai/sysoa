@@ -17,12 +17,20 @@ public abstract class BaseSuperviseProgressInfoApply<M extends BaseSuperviseProg
 		return get("progress_info_apply_id");
 	}
 
-	public void setProgressInfoId(java.lang.Integer progressInfoId) {
-		set("progress_info_id", progressInfoId);
+	public void setSuperviseProgressInfoId(java.lang.Integer superviseProgressInfoId) {
+		set("supervise_progress_info_id", superviseProgressInfoId);
 	}
 
-	public java.lang.Integer getProgressInfoId() {
-		return get("progress_info_id");
+	public java.lang.Integer getSuperviseProgressInfoId() {
+		return get("supervise_progress_info_id");
+	}
+
+	public void setApplyCon(java.lang.String applyCon) {
+		set("apply_con", applyCon);
+	}
+
+	public java.lang.String getApplyCon() {
+		return get("apply_con");
 	}
 
 	public void setApplyStatus(java.lang.String applyStatus) {

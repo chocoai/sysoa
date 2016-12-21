@@ -11,19 +11,20 @@ Table: leader_info
 -----------------+--------------+------+-----+---------+---------
 
 Table: leader_schedule
--------------+--------------+------+-----+---------+---------
- Field       | Type         | Null | Key | Default | Remarks 
--------------+--------------+------+-----+---------+---------
- id          | INT(10)      | NO   | PRI |         |         
- subject     | VARCHAR(255) | NO   |     |         |         
- leaderid    | INT(10)      | NO   |     |         |         
- userid      | INT(10)      | NO   |     |         |         
- start       | DATETIME(19) | NO   |     |         |         
- end         | DATETIME(19) | NO   |     |         |         
- create_date | DATETIME(19) | NO   |     |         |         
- sj_type     | VARCHAR(10)  | YES  |     | 0       | 事记类型   0 会议、1调研、2出差、3接待
- isdelete    | VARCHAR(5)   | YES  |     | 0       |         
--------------+--------------+------+-----+---------+---------
+--------------+--------------+------+-----+---------+---------
+ Field        | Type         | Null | Key | Default | Remarks 
+--------------+--------------+------+-----+---------+---------
+ id           | INT(10)      | NO   | PRI |         |         
+ subject      | VARCHAR(255) | NO   |     |         |         
+ sch_position | VARCHAR(255) | YES  |     |         | 地点      
+ leaderid     | INT(10)      | NO   |     |         |         
+ userid       | INT(10)      | NO   |     |         |         
+ start        | DATETIME(19) | NO   |     |         |         
+ end          | DATETIME(19) | NO   |     |         |         
+ create_date  | DATETIME(19) | NO   |     |         |         
+ sj_type      | VARCHAR(10)  | YES  |     | 0       | 事记类型   0 会议、1调研、2出差、3接待
+ isdelete     | VARCHAR(5)   | YES  |     | 0       |         
+--------------+--------------+------+-----+---------+---------
 
 Table: menu
 -------+-------------+------+-----+---------+---------
@@ -149,6 +150,14 @@ Table: t_news_approval
  cuser_organiz_id       | INT(10)      | YES  |     |         |         
 ------------------------+--------------+------+-----+---------+---------
 
+Table: t_rec_organiz
+------------------+--------------+------+-----+---------+---------
+ Field            | Type         | Null | Key | Default | Remarks 
+------------------+--------------+------+-----+---------+---------
+ rec_organiz_id   | INT(10)      | NO   | PRI |         |         
+ rec_organiz_name | VARCHAR(255) | YES  |     |         |         
+------------------+--------------+------+-----+---------+---------
+
 Table: t_recp_apply
 -----------------------+--------------+------+-----+---------+---------
  Field                 | Type         | Null | Key | Default | Remarks 
@@ -180,7 +189,8 @@ Table: t_recp_feed
  require_id   | INT(10)      | YES  |     |         | 要求表id   
  feed_con     | VARCHAR(255) | YES  |     |         | 反馈内容    
  feed_organiz | VARCHAR(255) | YES  |     |         | 反馈机构    
- feed_status  | VARCHAR(255) | YES  |     | 0       | 反馈状态 （0 未读，1通过）
+ feed_status  | VARCHAR(255) | YES  |     | 0       | 反馈状态 （0 未读，1通过, 2拒绝）
+ feed_idea    | VARCHAR(255) | YES  |     |         | 对反馈意见的评论
  cdate        | DATETIME(19) | YES  |     |         |         
  cuser_id     | INT(10)      | YES  |     |         |         
  cuser_name   | VARCHAR(255) | YES  |     |         |         
@@ -215,7 +225,8 @@ Table: t_supervise_info
  info_sno           | VARCHAR(255) | YES  |     |         | 批示文件编号  
  info_img_url       | TEXT(65535)  | YES  |     |         | 批示件扫描（图片）
  rec_sno            | VARCHAR(255) | YES  |     |         | 来文原号    
- rec_organiz_id     | INT(10)      | YES  |     |         |         
+ rec_organiz_id     | VARCHAR(255) | YES  |     |         |         
+ info_approval_type | VARCHAR(255) | YES  |     |         | 领导批示类型  
  rec_time           | DATETIME(19) | YES  |     |         | 收文时间    
  isfinish           | VARCHAR(255) | YES  |     | 0       | 0  1已下发   2已完成
  cdate              | DATETIME(19) | YES  |     |         |         
@@ -233,6 +244,7 @@ Table: t_supervise_progress
  progress_id        | INT(10)      | NO   | PRI |         |         
  progress_status    | VARCHAR(255) | YES  |     |         | 办理情况    
  supervise_info_id  | INT(10)      | YES  |     |         |         
+ supervise_info_con | VARCHAR(255) | YES  |     |         | 批示文件上报情况
  udate              | DATETIME(19) | YES  |     |         |         
  uuser_id           | INT(10)      | YES  |     |         |         
  uuser_name         | VARCHAR(255) | YES  |     |         |         
@@ -241,33 +253,37 @@ Table: t_supervise_progress
 --------------------+--------------+------+-----+---------+---------
 
 Table: t_supervise_progress_info
------------------------+--------------+------+-----+---------+---------
- Field                 | Type         | Null | Key | Default | Remarks 
------------------------+--------------+------+-----+---------+---------
- progress_info_id      | INT(10)      | NO   | PRI |         |         
- supervise_progress_id | INT(10)      | YES  |     |         |         
- progress_info_con     | VARCHAR(255) | YES  |     |         |         
- progress_info_status  | VARCHAR(255) | YES  |     |         |         
- cdate                 | DATETIME(19) | YES  |     |         |         
- cuser_id              | INT(10)      | YES  |     |         |         
- cuser_name            | VARCHAR(255) | YES  |     |         |         
- cuser_organiz_id      | INT(10)      | YES  |     |         |         
- cuser_organiz_name    | VARCHAR(255) | YES  |     |         |         
------------------------+--------------+------+-----+---------+---------
+------------------------+--------------+------+-----+---------+---------
+ Field                  | Type         | Null | Key | Default | Remarks 
+------------------------+--------------+------+-----+---------+---------
+ progress_info_id       | INT(10)      | NO   | PRI |         |         
+ supervise_progress_id  | INT(10)      | YES  |     |         |         
+ progress_info_url_type | VARCHAR(255) | YES  |     |         | 汇报材料类型  
+ progress_info_url      | VARCHAR(255) | YES  |     |         | 汇报材料    
+ progress_info_con      | VARCHAR(255) | YES  |     |         |         
+ progress_info_img      | VARCHAR(255) | YES  |     |         |         
+ progress_info_status   | VARCHAR(255) | YES  |     |         |         
+ cdate                  | DATETIME(19) | YES  |     |         |         
+ cuser_id               | INT(10)      | YES  |     |         |         
+ cuser_name             | VARCHAR(255) | YES  |     |         |         
+ cuser_organiz_id       | INT(10)      | YES  |     |         |         
+ cuser_organiz_name     | VARCHAR(255) | YES  |     |         |         
+------------------------+--------------+------+-----+---------+---------
 
 Table: t_supervise_progress_info_apply
--------------------------+--------------+------+-----+---------+---------
- Field                   | Type         | Null | Key | Default | Remarks 
--------------------------+--------------+------+-----+---------+---------
- progress_info_apply_id  | INT(10)      | NO   | PRI |         |         
- progress_info_id        | INT(10)      | YES  |     |         |         
- apply_status            | VARCHAR(255) | YES  |     |         |         
- apply_date              | DATETIME(19) | YES  |     |         |         
- apply_user_id           | INT(10)      | YES  |     |         |         
- apply_user_name         | VARCHAR(255) | YES  |     |         |         
- apply_user_organiz_id   | INT(10)      | YES  |     |         |         
- apply_user_organiz_name | VARCHAR(255) | YES  |     |         |         
--------------------------+--------------+------+-----+---------+---------
+----------------------------+--------------+------+-----+---------+---------
+ Field                      | Type         | Null | Key | Default | Remarks 
+----------------------------+--------------+------+-----+---------+---------
+ progress_info_apply_id     | INT(10)      | NO   | PRI |         |         
+ supervise_progress_info_id | INT(10)      | YES  |     |         |         
+ apply_con                  | VARCHAR(255) | YES  |     |         | 审批意见    
+ apply_status               | VARCHAR(255) | YES  |     |         |         
+ apply_date                 | DATETIME(19) | YES  |     |         |         
+ apply_user_id              | INT(10)      | YES  |     |         |         
+ apply_user_name            | VARCHAR(255) | YES  |     |         |         
+ apply_user_organiz_id      | INT(10)      | YES  |     |         |         
+ apply_user_organiz_name    | VARCHAR(255) | YES  |     |         |         
+----------------------------+--------------+------+-----+---------+---------
 
 Table: t_supervise_require
 ----------------------+--------------+------+-----+---------+---------

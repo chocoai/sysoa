@@ -39,7 +39,7 @@ var render = function(res, curr, nums) {
             element += '<tr class="'+neio+'" style=" cursor:pointer; " data="' + news.info_id + '" ondblclick="ondetail(this)">';
             element += '        <td><p>' +sno1+ '</p></div></td>';
             element += '        <td><p>' + news.rec_time.substr(0,10) + '</p></div></td>';
-            element += '        <td><p>' + _organiz(news.rec_organiz_id) + '</p></div></td>';
+            element += '        <td><p>' + formartDic(news.rec_organiz_id, 'CODE_REC_ORGANIZS') + '</p></div></td>';/*_organiz(news.rec_organiz_id)*/
             element += '        <td><p>' + news.rec_sno + '</p></div></td>';
             
             element += '        <td><p>' + news.info_title + '</p></div></td>';
@@ -300,16 +300,18 @@ function addSupervise() {
                 var info_sno = body.find('form  #info_sno').val();
                 var rec_sno = body.find('form  #rec_sno').val();
                 var info_img = body.find('form  #info_img').val();
+                var app_type = body.find('form  #app_type').val();
 
                 var limit = body.find('form  #limit').val();
-                var chk_value = [];
+            /*    var chk_value = [];
                 body.find('form input[name="organizs"]:checked').each(
                     function() {
                         chk_value.push($(this).val());
                     });
-                var ids = chk_value.join(",") + ",";
+                var ids = chk_value.join(",") + ",";*/
+                var ids = body.find('form  #organizs').val();
 
-                if (type && con && title && rec_sno && info_sno && rdate && organiz && 　info_img && ids && limit) {
+                if (type && con && title && rec_sno && info_sno && rdate && organiz && ids && limit && app_type) {
                 	
                 	layer.close(index);
                 	
@@ -323,7 +325,8 @@ function addSupervise() {
                         organiz: organiz,
                         info_img: info_img,
                         limit: limit,
-                        ids: ids
+                        ids: ids,
+                        app_type: app_type
                     }, function(data) {
                         var icon = 5;
                         if (data.isSuccess) {
@@ -613,7 +616,7 @@ function onProgress(dom) {
             area: ['550px', '480px'],
             skin: 'layui-layer-lan',
             type: 2,
-            content: ['goaddProgress', 'no'],
+            content: ['goaddProgress', 'yes'],
             success: function(layero, index) {
                 $.getJSON("supervise/progress/info/query1", {
                     pid: id

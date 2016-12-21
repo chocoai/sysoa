@@ -33,6 +33,14 @@ public abstract class BaseSuperviseProgress<M extends BaseSuperviseProgress<M>> 
 		return get("supervise_info_id");
 	}
 
+	public void setSuperviseInfoCon(java.lang.String superviseInfoCon) {
+		set("supervise_info_con", superviseInfoCon);
+	}
+
+	public java.lang.String getSuperviseInfoCon() {
+		return get("supervise_info_con");
+	}
+
 	public void setUdate(java.util.Date udate) {
 		set("udate", udate);
 	}

@@ -9,6 +9,7 @@ import com.sysoa.integrate.controller.IntegratedInfoController;
 import com.sysoa.integrate.model.IntegratedApproval;
 import com.sysoa.integrate.model.IntegratedHandling;
 import com.sysoa.integrate.model.IntegratedInfo;
+import com.sysoa.model.data.RecOrganiz;
 import com.sysoa.news.controller.AppController;
 import com.sysoa.news.controller.ApprovalController;
 import com.sysoa.news.model.AppModel;
@@ -81,6 +82,9 @@ public class _MappingKit {
 		arp.addMapping("t_integrated_approval", "approval_id", IntegratedApproval.class);
 		arp.addMapping("t_integrated_handling", "handl_id", IntegratedHandling.class);
 		arp.addMapping("t_integrated_info", "info_id", IntegratedInfo.class);
+		
+		//下发部门表
+		//arp.addMapping("t_rec_organiz", "rec_organiz_id", RecOrganiz.class);
 	}
 	
 	public static void mappingController(Routes me) {

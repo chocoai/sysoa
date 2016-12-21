@@ -45,13 +45,14 @@ public class SuperviseInfoController extends Controller {
 						.set("info_title", getPara("title"))
 						.set("info_con", getPara("con"))
 						.set("rec_time", getParaToDate("rdate"))
-						.set("rec_organiz_id", getParaToInt("organiz"))
+						.set("rec_organiz_id", getPara("organiz"))
 						.set("info_img_url", getPara("info_img"))
 						.set("cdate", new Date())
 						.set("cuser_id", getSessionAttr("userId"))
 						.set("cuser_name", getSessionAttr("username"))
 						.set("cuser_organiz_id", getSessionAttr("organizid"))
 						.set("cuser_organiz_name", getSessionAttr("organiz"))
+						.set("info_approval_type", getPara("app_type"))
 						.set("isfinish", "1")
 						.save();
 				//require

@@ -55,7 +55,7 @@
 					<p id="type">文件类型：${obj.info_type }</p>
 					<p>来文原号：${obj.rec_sno }</p>
 					<p>批示文件编号：${obj.info_sno }</p>
-					<p>来文单位：${obj.user_organiz_name }</p>
+					<p id="rec_org_id">${obj.rec_organiz_id}</p>
 					<p>创建人：${obj.cuser_organiz_name} ${obj.cuser_name}</p>
 					<p>
 						创建时间：
@@ -72,12 +72,14 @@
 					<div class="ui segment" id="image_segment">
 						<p>批示件扫描</p>
 						<div class="image" id="layer-photos-demo">
+						    <c:if test="${ obj.info_img_url != null && obj.info_img_url !=''}">
 							<c:forEach items="${fn:split(obj.info_img_url,',')}" var="addr"
 								begin="0" end="${fn:length(fn:split(obj.info_img_url,','))}"
 								varStatus="stat">
 								<img src="<%=basePath%>${ addr}" style="height: 2em; cursor: pointer;" title="点击查看大图"
 									alt="批示件扫描">
 							</c:forEach>
+							</c:if>
 						</div>
 					</div>
 				<!-- 	<div class="ui segment no-print">
@@ -89,35 +91,38 @@
 				<blockquote class="layui-elem-quote " id="require1"></blockquote>
 				<blockquote class="layui-elem-quote " id="require2"></blockquote>
 			</div>
+
+
+           		<div id="list">
+
+					<table class="ui celled table">
+						<thead>
+							<tr>
+								<th>办理进度</th>
+								<th width="30%">办理情况</th>
+								<th>上报材料/(类型)/相关图片</th>
+								<th>办理部门(日期)</th>
+								<th>审批状态</th>
+								<th>审批部门/(日期)</th>
+								<th class="no-print">操作</th>
+							</tr>
+						</thead>
+		
+						<tbody>
+						
+						</tbody>
+						<tfoot>
+							<tr>
+								<th colspan="7">
+									<div id="biuuu_city_list"></div>
+								</th>
+							</tr>
+						</tfoot>
+		
+					</table>
+				</div>
 		</div>
-		<div class="ui segment" id="list">
 
-			<table class="ui celled table">
-				<thead>
-					<tr>
-						<th>办理进度</th>
-						<th width="30%">办理情况</th>
-						<th>上报材料/(类型)/相关图片</th>
-						<th>办理部门(日期)</th>
-						<th>审批状态</th>
-						<th>审批部门/(日期)</th>
-						<th class="no-print">操作</th>
-					</tr>
-				</thead>
-
-				<tbody>
-				
-				</tbody>
-				<tfoot>
-					<tr>
-						<th colspan="7">
-							<div id="biuuu_city_list"></div>
-						</th>
-					</tr>
-				</tfoot>
-
-			</table>
-		</div>
 		<input type="hidden" id="t_end_time" value="${obj.cdate}">
 		<input type="hidden" id="t_info_type" value="${obj.info_type}">
 		<input type="hidden" id="t_str" value="${str1}">

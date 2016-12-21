@@ -26,6 +26,7 @@ public class _MappingKit {
 		arp.addMapping("t_integrated_info", "info_id", IntegratedInfo.class);
 		arp.addMapping("t_news_app", "app_id", NewsApp.class);
 		arp.addMapping("t_news_approval", "approval_id", NewsApproval.class);
+		arp.addMapping("t_rec_organiz", "rec_organiz_id", RecOrganiz.class);
 		arp.addMapping("t_recp_apply", "apply_id", RecpApply.class);
 		arp.addMapping("t_recp_feed", "feed_id", RecpFeed.class);
 		arp.addMapping("t_recp_require", "require_id", RecpRequire.class);
