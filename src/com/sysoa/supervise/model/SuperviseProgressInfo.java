@@ -39,11 +39,24 @@ public class SuperviseProgressInfo extends BaseSuperviseProgressInfo<SupervisePr
 		return dao.find(select+sqlExceptSelect, infoid).size()>0 ? dao.find(select+sqlExceptSelect, infoid).get(0):null;
 	}
 	
-	public SuperviseProgressInfo findbyProOrg(Integer proid, Integer orgid){
+	public List<SuperviseProgressInfo> findbyProOrg(Integer proid, Integer orgid){
 		
 		String ssql = "SELECT * FROM t_supervise_progress_info sp WHERE sp.supervise_progress_id=?  AND sp.cuser_organiz_id=? ";
 		
-		return dao.find(ssql, proid, orgid).size()>0 ? dao.find(ssql, proid, orgid).get(0):null;
+		return dao.find(ssql, proid, orgid).size()>0 ? dao.find(ssql, proid, orgid):null;
+	}
+	
+	public SuperviseProgressInfo findbyProInfoid(Integer proinfoid){
+		
+		String ssql = "SELECT * FROM t_supervise_progress_info sp WHERE sp.progress_info_id=?  ";
+		
+		return dao.find(ssql, proinfoid).size()>0 ? dao.find(ssql, proinfoid).get(0):null;
+	}
+	public List<SuperviseProgressInfo> findbyProOrg(Integer proid){
+		
+		String ssql = "SELECT * FROM t_supervise_progress_info sp WHERE sp.supervise_progress_id=?  ";
+		
+		return dao.find(ssql, proid).size()>0 ? dao.find(ssql, proid):null;
 	}
 	
 	public List<SuperviseProgressInfo> findbyPro(Integer proid){

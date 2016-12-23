@@ -3,7 +3,10 @@ package com.sysoa.supervise.controller;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
@@ -59,7 +62,7 @@ public class SuperviseInfoController extends Controller {
 				boolean flag1 = new SuperviseRequire().set("cdate", new Date())
 						.set("cuser_id", getSessionAttr("userId")).set("cuser_organiz_id", getSessionAttr("organizid"))
 						.set("cuser_organiz_name", getSessionAttr("organiz"))
-						.set("supervise_info_id", sif.get("info_id")).set("require_organiz_id", getPara("ids"))
+						.set("supervise_info_id", sif.get("info_id")).set("require_organiz_id", getPara("ids")+",")
 						.set("require_finish_limit", getPara("limit")).save();
 
 				// 插入进度记录
@@ -74,12 +77,15 @@ public class SuperviseInfoController extends Controller {
 				//
 				boolean flag3 = false;
 				boolean flag4 = false;
+				
 				for (String id : getPara("ids").split(",")) {
 					String oname = UserOrganizModel.dao.findById(id).getStr("user_organiz_name");
 					SuperviseProgressInfo si = new SuperviseProgressInfo();
+					//插入进度明细
 					flag3 = si.set("supervise_progress_id", sp.get("progress_id"))
 							.set("progress_info_status", Contans.HANDLE_STATIUS_01)
 							.set("cuser_organiz_name", oname).set("cuser_organiz_id", id).save();
+					//插入进度明细的审批状态
 					flag4 = new SuperviseProgressInfoApply().set("supervise_progress_info_id", si.get("progress_info_id")).set("apply_status", Contans.APPROVAL_UN).save();			
 				}
 				
@@ -186,10 +192,52 @@ public class SuperviseInfoController extends Controller {
 		renderJson(SuperviseInfo.dao.querybycondition(getParaToInt("num"), getParaToInt("size"), con));
 		
 	}
+
 	public void getAll4Supervise(){
 		
 		renderJson(SuperviseInfo.dao.querybyall(getParaToInt("num"), getParaToInt("size")));
 
 	}
+	public void getAll4Supervise_user(){
+		
+		renderJson(SuperviseInfo.dao.querybyall_user(getParaToInt("num"), getParaToInt("size"), getSessionAttr("organizid")));
+
+	}
+	//查询当前用户的进度明细的审批状态是否有 被拒绝的
+	public void getProInfoApprovalStatus(){
+		List<SuperviseProgressInfo> ss = SuperviseProgressInfo.dao.findbyProOrg(getParaToInt("proid"), getSessionAttr("organizid"));
 	
+		boolean flag = false;
+		if(ss != null){
+			for(SuperviseProgressInfo s: ss){
+			
+				SuperviseProgressInfoApply spa = SuperviseProgressInfoApply.dao.findbyinfoid(s.getInt("progress_info_id"));
+				
+				
+				flag = Contans.APPROVAL_NO.equals( spa.getStr("apply_status"));
+				
+				if(flag){break;}
+			}
+		}
+		renderJson(flag);
+	}
+	//查询单督办事件是否有已提交而未审批的记录
+	public void getProInfoApprovalStatus_un(){
+		List<SuperviseProgressInfo> ss = SuperviseProgressInfo.dao.findbyProOrg(getParaToInt("proid"));
+		
+		boolean flag = false;
+		if(ss != null){
+			for(SuperviseProgressInfo s: ss){
+			
+				SuperviseProgressInfoApply spa = SuperviseProgressInfoApply.dao.findbyinfoid(s.getInt("progress_info_id"));
+				
+				
+				flag = Contans.APPROVAL_UN.equals( spa.getStr("apply_status")) && StringUtils.isNotEmpty(s.getStr("progress_info_con"));
+				
+				if(flag){break;}
+			}
+		}
+		renderJson(flag);
+		
+	}
 }

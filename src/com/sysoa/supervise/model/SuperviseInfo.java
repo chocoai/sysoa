@@ -21,7 +21,7 @@ public class SuperviseInfo extends BaseSuperviseInfo<SuperviseInfo> {
 	public Page<SuperviseInfo> queryBy1Organizid(Integer pageNumber, Integer pageSize, Integer organizid){
 		
 		String select = "SELECT tsf.*, tsp.progress_id, "
-				+ " tsp.progress_status, tsr.cdate AS r_cdate, "
+				+ " tsp.progress_status, tsp.supervise_info_con, tsr.cdate AS r_cdate, "
 				+ " tsr.cuser_organiz_name AS r_organiz_name, "
 				+ " tsr.require_finish_limit , tsr.require_organiz_id";
 				//+ " tuo.user_organiz_name AS require_oragniz_name ";
@@ -42,7 +42,7 @@ public class SuperviseInfo extends BaseSuperviseInfo<SuperviseInfo> {
 	public Page<SuperviseInfo> queryBy2Organizid(Integer pageNumber, Integer pageSize, Integer organizid){
 		
 		String select = "SELECT tsf.*, tsp.progress_id, "
-				+ " tsp.progress_status, tsr.cdate AS r_cdate, "
+				+ " tsp.progress_status, tsp.supervise_info_con, tsr.cdate AS r_cdate, "
 				+ " tsr.cuser_organiz_name AS r_organiz_name, "
 				+ " tsr.require_finish_limit , tsr.require_organiz_id";
 				//+ " tuo.user_organiz_name AS require_oragniz_name ";
@@ -90,7 +90,7 @@ public class SuperviseInfo extends BaseSuperviseInfo<SuperviseInfo> {
 	public  Page<SuperviseInfo> querybycondition(Integer pageNumber, Integer pageSize, Map<String, Object> conditions){
 		
 		String select = "SELECT tsf.*, tsp.progress_id, "
-				+ " tsp.progress_status, tsr.cdate AS r_cdate, "
+				+ " tsp.progress_status, tsp.supervise_info_con, tsr.cdate AS r_cdate, "
 				+ " tsr.cuser_organiz_name AS r_organiz_name, "
 				+ " tsr.require_finish_limit, tsr.require_organiz_id";
 				//+ " tuo.user_organiz_name AS require_oragniz_name ";
@@ -117,7 +117,7 @@ public class SuperviseInfo extends BaseSuperviseInfo<SuperviseInfo> {
 	public  Page<SuperviseInfo> querybyall(Integer pageNumber, Integer pageSize){
 		
 		String select = "SELECT tsf.*, tsp.progress_id, "
-				+ " tsp.progress_status, tsr.cdate AS r_cdate, "
+				+ " tsp.progress_status, tsp.supervise_info_con, tsr.cdate AS r_cdate, "
 				+ " tsr.cuser_organiz_name AS r_organiz_name, "
 				+ " tsr.require_finish_limit , tsr.require_organiz_id";
 				//+ " tuo.user_organiz_name AS require_oragniz_name ";
@@ -132,6 +132,29 @@ public class SuperviseInfo extends BaseSuperviseInfo<SuperviseInfo> {
 		
 		
 		return dao.paginate(pageNumber, pageSize, select, sqlExceptSelect);
+	}
+	/**
+	 * 查询当前用户所有的督办工作
+	 * @return
+	 */
+	public  Page<SuperviseInfo> querybyall_user(Integer pageNumber, Integer pageSize, Integer oid){
+		
+		String select = "SELECT tsf.*, tsp.progress_id, "
+				+ " tsp.progress_status, tsp.supervise_info_con, tsr.cdate AS r_cdate, "
+				+ " tsr.cuser_organiz_name AS r_organiz_name, "
+				+ " tsr.require_finish_limit , tsr.require_organiz_id";
+				//+ " tuo.user_organiz_name AS require_oragniz_name ";
+		
+		String sqlExceptSelect = "FROM t_supervise_info tsf "
+				+ " LEFT JOIN t_supervise_require tsr ON tsf.info_id = tsr.supervise_info_id "
+				//+ " LEFT JOIN t_user_organiz tuo ON tsr.require_organiz_id = tuo.id "
+				+ " LEFT JOIN t_supervise_progress tsp ON tsf.info_id = tsp.supervise_info_id "
+				+ " WHERE tsf.isdelete ='0' AND tsr.require_organiz_id like ? ";
+				
+		sqlExceptSelect	+= " ORDER BY tsf.cdate desc, tsr.require_finish_limit";		
+		
+		
+		return dao.paginate(pageNumber, pageSize, select, sqlExceptSelect, "%"+oid+",%");
 	}
 	/**
 	 * 查询未被 下发的督办工作

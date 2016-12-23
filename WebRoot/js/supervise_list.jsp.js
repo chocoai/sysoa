@@ -21,13 +21,22 @@ var render = function(res, curr, nums) {
 
             var _neio = '';
             var neio = '';
+            var approval_flag_ele   
+            if(userflag =='A') {
+            	
+            	approval_flag_ele =  _findApprovalStatus(news.progress_id) ? '<div class="ui red ribbon label"><p>以拒绝</p></div>':'';
+           
+            }else if(userflag =='M'){
+            	
+            	approval_flag_ele =  _findApproval_Status(news.progress_id) ? '<div class="ui red ribbon label"><p>待审批</p></div>':'';
+            }
             
             if (news.isfinish !=='2') {
             	 neio = haveDate(news.cdate, news.require_finish_limit) ? 'positive' : 'warning';
             	_neio = haveDate(news.cdate, news.require_finish_limit) ? '<i class="warning green circle icon"></i>' : '<i class="warning red circle icon"></i>'; 
-            	} else {
+            } else {
             	_neio = ''; 
-            	}
+            }
 
             
          /*   if(news.isfinish !=='2'){
@@ -36,8 +45,8 @@ var render = function(res, curr, nums) {
             	_neio = 'background-color: #5FB878 !important ;';
             }*/
             
-            element += '<tr class="'+neio+'" style=" cursor:pointer; " data="' + news.info_id + '" ondblclick="ondetail(this)">';
-            element += '        <td><p>' +sno1+ '</p></div></td>';
+            element += '<tr class="'+neio+'" style=" cursor:pointer; " data="' + news.info_id + '" ondblclick="ondetail(this)" title="双击修改办理进度">';
+            element += '        <td>'+approval_flag_ele+'<p>' +sno1+ '</p></div></td>';
             element += '        <td><p>' + news.rec_time.substr(0,10) + '</p></div></td>';
             element += '        <td><p>' + formartDic(news.rec_organiz_id, 'CODE_REC_ORGANIZS') + '</p></div></td>';/*_organiz(news.rec_organiz_id)*/
             element += '        <td><p>' + news.rec_sno + '</p></div></td>';
@@ -46,7 +55,7 @@ var render = function(res, curr, nums) {
             element += '        <td><p>' + news.info_con + '</p></div></td>';
             element += '        <td><p>' + _organiz(news.require_organiz_id) + '</p></div></td>';
 
-            element += '<td> 办理情况</td>';
+            //element += '<td> 办理情况</td>';
             element += '<td>' + formartDic(news.info_type, 'CODE_EVENT_SUPERVISE') + '</td>';
             
             element += '<td>' +_neio + formartDic(news.progress_status, 'CODE_HANDLE_STATIUS') + '</td>';
@@ -69,6 +78,8 @@ var render = function(res, curr, nums) {
 	
 	                element += '<button class="layui-btn layui-btn-mini layui-btn-normal ' + dis + '"  ' + dis1 + ' data="' + news.progress_id + '" onclick="onProgress(this)">更新工作进展</button>';
 	            }
+            }else if(news.isfinish =='2'){
+            	 element += '<p>' + news.supervise_info_con + '</p>';
             }
           /*  if (userid == news.cuser_id) {
                 element += '<button class="layui-btn layui-btn-normal ' + dis + '"  ' + dis1 + '  data="' + news.info_id + '" onclick="onedit(this)">修改</button>';
@@ -194,7 +205,7 @@ function loaddata02(abc) {
     var userflag = $('#flag').val();
     var organizid = $('#organizid').val();
 
-    var resUrl = 'supervise/info/getAll4Supervise'
+    var resUrl = userflag == 'M' ? 'supervise/info/getAll4Supervise':'supervise/info/getAll4Supervise_user';
     var nums = 5; // 每页出现的数据量
 
     var ajDate = $
@@ -618,7 +629,7 @@ function onProgress(dom) {
             type: 2,
             content: ['goaddProgress', 'yes'],
             success: function(layero, index) {
-                $.getJSON("supervise/progress/info/query1", {
+         /*       $.getJSON("supervise/progress/info/query1", {
                     pid: id
                 }, function(data) {
 
@@ -648,7 +659,7 @@ function onProgress(dom) {
                         var iframeWin = window[layero.find('iframe')[0]['name']]; // 得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
                         var f = iframeWin.initform();
                     }
-                });
+                });*/
             },
             btn: ['提交', '取消'],
             yes: function(index, layero) {
@@ -661,7 +672,7 @@ function onProgress(dom) {
                 var img = body.find('form  #info_img').val();
 
 
-                if (complete && con && type && url) {
+                if (complete && con && type) {
                 	 layer.close(index);
                     $.getJSON("supervise/progress/info/add", {
                         complete: complete,
@@ -703,6 +714,31 @@ function onProgress(dom) {
     });
 }
 
+//查询审批是否被拒绝
+function _findApprovalStatus(proid){
+	
+	var flag = false;
+	$.ajaxSettings.async = false;
+    $.getJSON("supervise/info/getProInfoApprovalStatus", {
+    	proid: proid
+    }, function(data) {
+      if(data){flag = data}
+    });
+    return flag;
+}
+//查询是否有新的提交
+function _findApproval_Status(proid){
+	
+	var flag = false;
+	$.ajaxSettings.async = false;
+    $.getJSON("supervise/info/getProInfoApprovalStatus_un", {
+    	proid: proid
+    }, function(data) {
+      if(data){flag = data}
+    });
+    return flag;
+}
+
 function _findCondiction() {
 
 
@@ -734,3 +770,44 @@ window.onload = function() {
         loaddata02(abc);
     });
 }
+/***
+ * 数据统计
+ * @returns
+ */
+function find_data_cond() {
+	layui.use([ 'layer', 'element' ], function() {
+		var layer = layui.layer;
+		layer.open({
+			title : '督办数据统计',
+			skin : 'layui-layer-lan',
+			area : [ '100%', '100%' ],
+			type : 2,
+			content : [ 'gosupdatacond', 'yes' ],
+			success : function(layero, index) {
+
+			/*	var body = layer.getChildFrame('body', index);
+
+				//给表单赋值
+				body.find('#start').val(fstart);
+				body.find('#end').val(fend);
+
+				//调用子页面渲染方法
+				var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：
+				//iframeWin._render();
+				var ifr = iframeWin.findCondiction();
+*/
+			},
+			btn : [ '打印', '关闭' ],
+			yes : function(index, layero) {
+				var iframeWin = window[layero.find('iframe')[0]['name']];
+
+				iframeWin.JQprint();
+			},
+			btn2 : function(index, layero) {
+				layer.close(index);
+			}
+
+		});
+	});
+}
+

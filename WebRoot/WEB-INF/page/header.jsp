@@ -23,9 +23,11 @@
 		<div class="item" >
 		  <a>${username!=null?username:'请登录' }</a>
 		</div>
+		<c:if test="${flag == 'M' }">
 		<div class="item" >
 		  <div class="ui basic  button" id="editpwd"><a>修改密码</a></div>
 		</div>
+		</c:if>
 		<div class="item">
 			<div class="ui basic  button" ><a href="exit">退出</a></div>
 		</div>
@@ -189,6 +191,7 @@ function _organiz(id){
 			$(_organizs).each(function(i,item){
 				
 				if(item.id == jitem){
+					if(str.length >0){str += '、';}
 					str += item.user_organiz_name;
 					
 				}
@@ -207,5 +210,33 @@ function _organiz(id){
 	return str;
 }
 idtoName();
+
+(function ($) {  
+    $.fn.extend({  
+        //表格合并单元格，colIdx要合并的列序号，从0开始  
+        "rowspan": function (colIdx) {  
+            return this.each(function () {  
+                var that;  
+                $('tr', this).each(function (row) {  
+                    $('td:eq(' + colIdx + ')', this).filter(':visible').each(function (col) {  
+                        if (that != null && $(this).html() == $(that).html()) {  
+                            rowspan = $(that).attr("rowSpan");  
+                            if (rowspan == undefined) {  
+                                $(that).attr("rowSpan", 1);  
+                                rowspan = $(that).attr("rowSpan");  
+                            }  
+                            rowspan = Number(rowspan) + 1;  
+                            $(that).attr("rowSpan", rowspan);  
+                            $(this).hide();  
+                        } else {  
+                            that = this;  
+                        }  
+                    });  
+                });  
+            });  
+        }  
+    });  
+  
+})(jQuery);  
 
 </script>

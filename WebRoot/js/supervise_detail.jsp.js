@@ -17,8 +17,8 @@ function loaddata(abc) {
                         if (list.length > 0) {
 
                             $(list).each(function(i, item) {
-                                var _dis0 = item.progress_info_status == 'HANDLE_STATIUS_02' ? '' : 'disabled title="工作未完成"';
-                                var _dis1 = item.progress_info_status == 'HANDLE_STATIUS_02' ? '' : 'layui-disabled';
+                                var _dis0 = item.progress_info_con  ? '' : 'disabled title="工作尚未提交"';
+                                var _dis1 = item.progress_info_con  ? '' : 'layui-disabled';
 
                                 var icon = "";
                                 if (item.apply_status == '0') { icon = '<i class="warning yellow circle icon"></i>'; } else if (item.apply_status == '1') { icon = '<i class="check green circle icon"></i>'; } else if (item.apply_status == '2') { icon = '<i class="remove red circle icon"></i>'; }
@@ -27,23 +27,33 @@ function loaddata(abc) {
                                 var apply_date = item.apply_date ? item.apply_date.substr(0, 16) : '';
                                 var con = item.progress_info_con ? item.progress_info_con : '';
                                 var app_org_name = item.apply_user_organiz_name ? item.apply_user_organiz_name : '';
+                                
                                 var info_url = item.progress_info_url ? item.progress_info_url : '';
                                 var imagelist = "";
+                                var fileList = "";
 
                                 if (item.progress_info_img) {
                                     $(item.progress_info_img.split(',')).each(function(i, jt) {
                                         imagelist += '<img src="' + jt + '" style="height: 2em;cursor: pointer;" title="点击查看大图">';
                                     });
                                 }
-                                element += '<tr>';
-                                element += '<td><p class="status">' + formartDic(item.progress_info_status, 'CODE_HANDLE_STATIUS') + '</p></td>';
+                                if (item.progress_info_url) {
+                                    $(item.progress_info_url.split(',')).each(function(i, jt) {
+                                        fileList += '<i class="file text blue small icon"></i><a data-url="' + jt + '" title="预览" onclick="lookfile(this)" style="cursor: pointer;">' + jt.substr(27, info_url.length) + ' </a>';
+                                    });
+                                }
+                                //未审批通过的都可修改
+                                var edit = item.apply_status != '1' ? 'onProgress(this)':'';
+                                
+                                element += '<tr style=" cursor:pointer; " data="'+item.progress_info_id+'" ondblclick="'+edit+'">';
+                                element += '<td><p>' + item.cuser_organiz_name + '</p></td>';
+                                element += '<td><p class="status">' + formartDic(item.progress_info_status, 'CODE_HANDLE_STATIUS') + '</p><p>' + cdate + '</p></td>';
                                 element += '<td class="description"><p>' + con + '</p></td>';
                                 element += '<td><p>' + formartDic(item.progress_info_url_type, 'CODE_REPORT_MATERIAL_TYPE') + '</p>';
-                                element += info_url ? ' <i class="file text blue small icon"></i><a data-url="' + item.progress_info_url + '" title="预览" onclick="lookfile(this)" style="cursor: pointer;">' + info_url.substr(27, info_url.length) + ' </a>' : '';
+                                element += fileList;
                                 element += imagelist ? '<div class="ui segment">' + '  <p>相关图片</p>' + '  <div class="image imagelist">' + imagelist + '  </div>' + '</div>' : '';
                                 element += '</td>';
-                                element += '<td><p>' + item.cuser_organiz_name + '</p>';
-                                element += '    <p>' + cdate + '</p></td>';
+                              
                                 element += '<td><p class="apply-status">' + icon + formartDic(item.apply_status, 'CODE_APPROVAL') + '</p></td>';
                                 element += '<td><p>' + app_org_name + '</p>';
                                 element += '    <p>' + apply_date + '</p>';
@@ -75,6 +85,10 @@ function loaddata(abc) {
                             }, function(res) {
                                 //render(res);
                                 $('#list tbody').html(render(res));
+                                
+                            	//合并单元格
+                                $('#list tbody').rowspan(0);
+                                
                                 layer.close(abc);
 
                                 layer.ready(function() { //为了layer.ext.js加载完毕再执行
@@ -232,7 +246,7 @@ function onapply(dom) {
             layer.open({
                 title: '审批',
                 skin: 'layui-layer-lan',
-                area: ['500px', '280px'],
+                area: ['500px', '310px'],
                 type: 2,
                 content: ['gosuperviseprogressinfo', 'no'],
                 success: function(layero, index) {
@@ -257,7 +271,7 @@ function onapply(dom) {
 
                     layer.close(index);
 
-                    if (type && idea) {
+                    if (type) {
                         $.getJSON("supervise/progress/info/apply/check", {
                             type: type,
                             con: idea,
@@ -359,3 +373,113 @@ $(function() {
     // Fork https://github.com/sathvikp/jQuery.print for the full list of options
 });
 //]]>
+
+
+
+function onProgress(dom) {
+    var id = $(dom).attr('data');
+    layui.use("layer", function() {
+        var layer = layui.layer;
+        layer.open({
+            title: '修改工作进展',
+            area: ['550px', '480px'],
+            skin: 'layui-layer-lan',
+            type: 2,
+            content: ['goaddProgress', 'yes'],
+            success: function(layero, index) {
+                $.getJSON("supervise/progress/info/_query1", {
+                    pid: id
+                }, function(data) {
+
+                    // 给表单赋值
+                    if (data && data.progress_info_status && data.progress_info_con) {
+                        var body = layer.getChildFrame('body', index);
+                        body.find('#addprogress #con').val(data.progress_info_con);
+
+                        var select = body.find('#addprogress #complete');
+                        var option = select.find("option[value='" + data.progress_info_status + "']");
+                        $(option).attr("selected", true); // select的值
+
+                        body.find('#addprogress #info_file').val(data.progress_info_url);
+                        var _file = '';
+                        var _img = '';
+                        if(data.progress_info_url){
+	                       $(data.progress_info_url.split(',')).each(function(i,item){
+	                        	_file += '<p><i class="file text blue semll icon"></i><span >'+item.substr(27, item.length)+'</span><i class="close icon" style="position: absolute; cursor: pointer;color: black;" title="删除" data="'+item+'"></i></p>';
+	                        });
+                        }
+                        
+                        if(data.progress_info_img){
+ 	                       $(data.progress_info_img.split(',')).each(function(i,item){
+ 	                    	  _img += '<div><img src="'+item+'" alt="..."><i class="close icon" style="position: absolute; cursor: pointer;color: black;" title="删除" data="'+item+'"></i></div>';
+ 	                        });
+                         }
+                        body.find('#addprogress #image_segment #file').html(_file);
+                        body.find('#addprogress #image_segment #img').html(_img);
+                        body.find('#addprogress #info_img').val(data.progress_info_img);
+
+                        var select2 = body.find('#addprogress #type');
+                        var option2 = select2.find("option[value='" + data.progress_info_url_type + "']");
+                        $(option2).attr("selected", true); // select的值
+
+                        // body.find('#addprogress .layui-select-title
+                        // input').val(data.progress_info_complete+'%');//select的title
+                        // 汇报材料已经上报不可修改
+
+                        /*body.find('#addprogress #url_type').css("display", "none");
+                        body.find('#addprogress #image_segment').css("display", "none");*/
+
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; // 得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                        var f = iframeWin.initform();
+                    }
+                });
+            },
+            btn: ['修改', '取消'],
+            yes: function(index, layero) {
+                var body = layer.getChildFrame('body', index);
+
+                var complete = body.find('form  #complete').val();
+                var con = body.find('form  #con').val();
+                var type = body.find('form  #type').val();
+                var url = body.find('form  #info_file').val();
+                var img = body.find('form  #info_img').val();
+
+
+                if (complete && con && type) {
+                	 layer.close(index);
+                    $.getJSON("supervise/progress/info/_edit", {
+                        complete: complete,
+                        con: con,
+                        type: type,
+                        url: url,
+                        img: img,
+                        id: id
+                    }, function(data) {
+                        var icon = 5;
+                        if (data.isSuccess) {
+                        	var abc = layer.load(0, { time: 10 * 1000 });
+                            loaddata(abc);
+                            icon = 6
+                        }
+                        layer.msg(data.msg, {
+                            icon: icon,
+                            anim: 6
+                        });
+
+                    });
+                } else {
+
+                    layer.msg('表单不完整请重新输入！', {
+                        icon: 5,
+                        anim: 6
+                    });
+                    var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                    iframeWin.vdform();
+                }
+
+            },btn3: function(index, layero) {
+                layer.closeAll();
+            }
+        });
+    });
+}

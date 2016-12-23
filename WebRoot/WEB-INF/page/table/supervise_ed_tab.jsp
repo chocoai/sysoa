@@ -24,7 +24,6 @@
 			<th width="15%">简要内容</th>
 			<th width="15%">领导批示</th>
 			<th>承办单位</th>
-			<th width="15%">办理情况</th>
 			<th>类型</th>
 			<th>办理进度</th>
 			<th>操作</th>

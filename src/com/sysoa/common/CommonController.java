@@ -318,7 +318,7 @@ public class CommonController extends Controller {
 		if(QStringUtil.countStr(ids, ",")>0){
 			
 			for(String id :ids.split(",")){
-				if(idstr.length()>0) idstr += "|";
+				if(idstr.length()>0) idstr += "、";
 			    idstr += UserOrganizModel.dao.findById(Integer.parseInt(id)).getStr("user_organiz_name");
 			}
 		}else {

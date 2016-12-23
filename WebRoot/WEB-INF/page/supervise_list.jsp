@@ -32,6 +32,9 @@
 				<button class="positive ui button" onclick="addSupervise()">
 					<i class="add icon"></i>表单填写
 				</button>
+				<button class="positive ui button" onclick="find_data_cond()">
+					<i class="add icon"></i>数据统计
+				</button>
 				</c:if>
 				
 				<div class="layui-tab layui-tab-brief" >
