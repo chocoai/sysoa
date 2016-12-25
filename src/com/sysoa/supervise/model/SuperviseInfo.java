@@ -134,6 +134,33 @@ public class SuperviseInfo extends BaseSuperviseInfo<SuperviseInfo> {
 		return dao.paginate(pageNumber, pageSize, select, sqlExceptSelect);
 	}
 	/**
+	 * 根据收件时间查询所有的督办工作
+	 * @return
+	 */
+	public  Page<SuperviseInfo> querybyallcondition(Integer pageNumber, Integer pageSize, Map<String, Object> conditions){
+		
+		String select = "SELECT tsf.*, tsp.progress_id, "
+				+ " tsp.progress_status, tsp.supervise_info_con, tsr.cdate AS r_cdate, "
+				+ " tsr.cuser_organiz_name AS r_organiz_name, "
+				+ " tsr.require_finish_limit , tsr.require_organiz_id";
+				//+ " tuo.user_organiz_name AS require_oragniz_name ";
+		
+		String sqlExceptSelect = "FROM t_supervise_info tsf "
+				+ " LEFT JOIN t_supervise_require tsr ON tsf.info_id = tsr.supervise_info_id "
+				//+ " LEFT JOIN t_user_organiz tuo ON tsr.require_organiz_id = tuo.id "
+				+ " LEFT JOIN t_supervise_progress tsp ON tsf.info_id = tsp.supervise_info_id "
+				+ " WHERE tsf.isdelete ='0' ";
+		
+		sqlExceptSelect += conditions.get("end") != null   ? " AND tsr.cdate< '"+conditions.get("end")+"'": " ";
+		
+		sqlExceptSelect += conditions.get("start") !=null  ? " AND tsr.cdate> '"+conditions.get("start")+"'" : " "; 
+				
+		sqlExceptSelect	+= " ORDER BY tsf.cdate desc, tsr.require_finish_limit";			
+		
+		
+		return dao.paginate(pageNumber, pageSize, select, sqlExceptSelect);
+	}
+	/**
 	 * 查询当前用户所有的督办工作
 	 * @return
 	 */
