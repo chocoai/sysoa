@@ -19,7 +19,10 @@ function loaddata(abc) {
                             $(list).each(function(i, item) {
                                 var _dis0 = item.progress_info_con ? '' : 'disabled title="工作尚未提交"';
                                 var _dis1 = item.progress_info_con ? '' : 'layui-disabled';
-
+                                 
+                                _dis0 =  item.apply_status == "1" ? 'disabled title="已审批"': _dis0;
+                                _dis1 =  item.apply_status == "1" ? 'layui-disabled' : _dis1;
+                                
                                 var icon = "";
                                 if (item.apply_status == '0') { icon = '<i class="warning yellow circle icon"></i>'; } else if (item.apply_status == '1') { icon = '<i class="check green circle icon"></i>'; } else if (item.apply_status == '2') { icon = '<i class="remove red circle icon"></i>'; }
 
