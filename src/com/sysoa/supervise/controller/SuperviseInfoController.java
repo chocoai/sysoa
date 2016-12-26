@@ -240,4 +240,74 @@ public class SuperviseInfoController extends Controller {
 		renderJson(flag);
 		
 	}
+	/**
+	 * 统计所有的数据
+	 */
+	public void getcountforall(){
+		
+		Map<String, Object> con = new HashMap<String, Object>();
+		
+		String start = getPara("start");
+		String end = getPara("end");
+		
+		if(start !=null	&& start.length()>0){con.put("start", start);}else{con.put("start", null);}
+			
+		if(end !=null && end.length()>0){con.put("end", end);}else{con.put("end", null);}
+		
+		renderJson(SuperviseInfo.dao.querybyallcondition(getParaToInt("num"), getParaToInt("size"), con));
+	}
+	/**
+	 * 统计各部门办件数量
+	 */
+	public void getcountfororganiz(){
+		
+		String start = getPara("start");
+		String end = getPara("end");
+		
+		String SQL = "SELECT " 
+					+"	 tuo.user_organiz_type, "
+					+"	 	tuo.user_organiz_name, "
+					+"	  abc.num AS sum, "
+					+"	  abc.done AS done, "
+					+"	  abc.doing AS doing "
+					+"	FROM "
+					+"		t_user_organiz tuo "
+					+"	LEFT JOIN ( "
+					+"		SELECT "
+					+"		tspi.cuser_organiz_id, "
+					+"		COUNT( "
+					+"			DISTINCT tspi.supervise_progress_id "
+					+"		) AS num, "
+					+"		COUNT( "
+					+"			DISTINCT tspi.supervise_progress_id, "
+					+"			CASE "
+					+"		WHEN tsp.progress_status = 'HANDLE_STATIUS_02' THEN "
+					+"			'a.u_id' "
+					+"		END "
+					+"		) AS done, "
+					+"		COUNT( "
+					+"			DISTINCT tspi.supervise_progress_id, "
+					+"			CASE "
+					+"		WHEN tsp.progress_status = 'HANDLE_STATIUS_01' THEN "
+					+"			'b.u_id' "
+					+"		END "
+					+"		) AS doing "
+					+"	FROM "
+					+"		t_supervise_progress_info tspi "
+					+"	LEFT JOIN t_user_organiz tuo ON tspi.cuser_organiz_id = tuo.id "
+					+"	LEFT JOIN t_supervise_progress tsp ON tspi.supervise_progress_id = tsp.progress_id "
+					+"  LEFT JOIN t_supervise_info tsi ON tsp.supervise_info_id = tsi.info_id"
+					+"	WHERE "
+					+"		tspi.cuser_organiz_id>0 ";
+				SQL += StringUtils.isNotEmpty(start)? "AND tsi.rec_time > '"+start+"'" : "";
+				SQL += StringUtils.isNotEmpty(end)? "AND tsi.rec_time < '"+end+"'" : "";
+				SQL +="	GROUP BY "
+					+"		tspi.cuser_organiz_id "
+					+"	ORDER BY "
+					+"		tuo.id "
+					+"	) abc ON abc.cuser_organiz_id = tuo.id";
+		
+		
+		renderJson(Db.find(SQL));
+	}
 }
