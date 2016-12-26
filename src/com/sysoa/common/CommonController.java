@@ -355,6 +355,11 @@ public class CommonController extends Controller {
 
 		render("views/FlexPaperViewer.jsp");
 	}
+	//数据统计跳转
+	public void gosupdatacond(){
+		
+		render("form/supervise_data_cond.jsp");
+	}
 	
 	//综合审批
 	public void gointegratedindex(){
