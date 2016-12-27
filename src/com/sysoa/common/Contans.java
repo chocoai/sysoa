@@ -175,4 +175,22 @@ public class Contans {
 			REC_ORGANIZS_14,REC_ORGANIZS_15,REC_ORGANIZS_16,REC_ORGANIZS_17,REC_ORGANIZS_18,REC_ORGANIZS_19,REC_ORGANIZS_20,REC_ORGANIZS_21,
 			REC_ORGANIZS_22,REC_ORGANIZS_23,REC_ORGANIZS_24};
 	public static final String  CODE_REC_ORGANIZS="CODE_REC_ORGANIZS";
+	
+	/**
+	 * 单位类型
+	 */
+	/**
+	 * 市局机关
+	 */
+	public static final String ORGANIZ_TYPE_01 = "ORGANIZ_TYPE_01";
+	/**
+	 * 分县局
+	 */
+	public static final String ORGANIZ_TYPE_02 = "ORGANIZ_TYPE_02";
+	/**
+	 * 直属分局
+	 */
+	public static final String ORGANIZ_TYPE_03 = "ORGANIZ_TYPE_03";
+	public static final String[] ORGANIZ_TYPE = new String[]{ORGANIZ_TYPE_01,ORGANIZ_TYPE_02,ORGANIZ_TYPE_03};
+	public static final String CODE_ORGANIZ_TYPE = "CODE_ORGANIZ_TYPE";
 }

@@ -411,6 +411,10 @@ public class CommonController extends Controller {
 			
 			sr = Contans.REC_ORGANIZS;
 			
+		}else if(Contans.CODE_ORGANIZ_TYPE.equals(ss)){
+			
+			sr = Contans.ORGANIZ_TYPE;
+		
 		}
 		li = QPropertiesUtil.list(sr);
 		
