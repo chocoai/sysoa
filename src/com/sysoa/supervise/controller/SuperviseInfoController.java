@@ -298,14 +298,15 @@ public class SuperviseInfoController extends Controller {
 					+"	LEFT JOIN t_supervise_progress tsp ON tspi.supervise_progress_id = tsp.progress_id "
 					+"  LEFT JOIN t_supervise_info tsi ON tsp.supervise_info_id = tsi.info_id"
 					+"	WHERE "
-					+"		tspi.cuser_organiz_id>0 ";
-				SQL += StringUtils.isNotEmpty(start)? "AND tsi.rec_time > '"+start+"'" : "";
-				SQL += StringUtils.isNotEmpty(end)? "AND tsi.rec_time < '"+end+"'" : "";
+					+"		tsi.info_approval_type= 'LEADER_APPROVAL_TYPE_02' ";
+				SQL += StringUtils.isNotEmpty(start)? "AND tsi.rec_time > '"+start+"' " : "";
+				SQL += StringUtils.isNotEmpty(end)? "AND tsi.rec_time < '"+end+"' " : "";
 				SQL +="	GROUP BY "
 					+"		tspi.cuser_organiz_id "
 					+"	ORDER BY "
-					+"		tuo.id "
-					+"	) abc ON abc.cuser_organiz_id = tuo.id";
+					+"		tuo.sort_order1 "
+					+"	) abc ON abc.cuser_organiz_id = tuo.id "
+					+" ORDER BY tuo.sort_order1 ";
 		
 		
 		renderJson(Db.find(SQL));

@@ -38,7 +38,7 @@
 					<i class="layui-icon" style="font-size: 20px; color: #009688;">&#xe60a;</i>工作详情
 				</legend>
 				<button class="positive ui button"
-					onclick="window.location.href='goSupervises'" style="float: right;">
+					onclick="window.location.href='<%=basePath%>goSupervises'" style="float: right;">
 					<i class="angle double left icon"></i> 返回列表
 				</button>
 			</fieldset>

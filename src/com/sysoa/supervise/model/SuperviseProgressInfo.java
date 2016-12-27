@@ -20,10 +20,11 @@ public class SuperviseProgressInfo extends BaseSuperviseProgressInfo<SupervisePr
 		String sqlExceptSelect = " FROM t_supervise_progress_info tspi "
 				
 				+ " LEFT JOIN t_supervise_progress_info_apply tspia ON tspi.progress_info_id = tspia.supervise_progress_info_id "
+				+ " LEFT JOIN t_user_organiz tuo ON tuo.id = tspi.cuser_organiz_id "
 				
 				+ " WHERE tspi.supervise_progress_id = ? "
 				
-				+ " ORDER BY tspi.cdate desc";	
+				+ " ORDER BY tuo.sort_order1, tspi.cdate desc";	
 		
 		return dao.paginate(pageNumber, pageSize, select, sqlExceptSelect, proid);
 	}

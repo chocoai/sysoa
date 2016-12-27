@@ -39,3 +39,29 @@ span {
 #image_segment > .segment{
 	 border-left: 1px solid black;
 }
+.form-div .layui-tab-item table {
+	border-left: 1px solid black !important;
+	border-top: 1px solid black !important;
+	border: 1px solid black !important;
+}
+.form-div .layui-tab-item table td,th {
+	 border-right: 1px solid black !important;
+	 border-bottom: 1px solid black !important;
+	 border: 1px solid black !important;
+}
+#laydate_ys {
+	overflow: hidden;
+}
+
+@media print {
+	.form-div .layui-tab-item table {
+		border-left: 1px solid black !important;
+		border-top: 1px solid black !important;
+		border: 1px solid black !important;
+	}
+	.form-div .layui-tab-item table td, th {
+		border-right: 1px solid black !important;
+		border-bottom: 1px solid black !important;
+		border: 1px solid black !important;
+	}
+}

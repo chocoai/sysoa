@@ -134,7 +134,7 @@ public class SuperviseInfo extends BaseSuperviseInfo<SuperviseInfo> {
 		return dao.paginate(pageNumber, pageSize, select, sqlExceptSelect);
 	}
 	/**
-	 * 根据收件时间查询所有的督办工作
+	 * 根据收件时间查询肖批示的所有的督办工作
 	 * @return
 	 */
 	public  Page<SuperviseInfo> querybyallcondition(Integer pageNumber, Integer pageSize, Map<String, Object> conditions){
@@ -149,13 +149,13 @@ public class SuperviseInfo extends BaseSuperviseInfo<SuperviseInfo> {
 				+ " LEFT JOIN t_supervise_require tsr ON tsf.info_id = tsr.supervise_info_id "
 				//+ " LEFT JOIN t_user_organiz tuo ON tsr.require_organiz_id = tuo.id "
 				+ " LEFT JOIN t_supervise_progress tsp ON tsf.info_id = tsp.supervise_info_id "
-				+ " WHERE tsf.isdelete ='0' ";
+				+ " WHERE tsf.isdelete ='0' AND tsf.info_approval_type= 'LEADER_APPROVAL_TYPE_02' ";
 		
-		sqlExceptSelect += conditions.get("end") != null   ? " AND tsr.cdate< '"+conditions.get("end")+"'": " ";
+		sqlExceptSelect += conditions.get("end") != null   ? " AND tsf.rec_time < '"+conditions.get("end")+"'": " ";
 		
-		sqlExceptSelect += conditions.get("start") !=null  ? " AND tsr.cdate> '"+conditions.get("start")+"'" : " "; 
+		sqlExceptSelect += conditions.get("start") !=null  ? " AND tsf.rec_time > '"+conditions.get("start")+"'" : " "; 
 				
-		sqlExceptSelect	+= " ORDER BY tsf.cdate desc, tsr.require_finish_limit";			
+		sqlExceptSelect	+= " ORDER BY tsf.rec_time desc ";			
 		
 		
 		return dao.paginate(pageNumber, pageSize, select, sqlExceptSelect);

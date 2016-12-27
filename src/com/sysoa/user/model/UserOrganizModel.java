@@ -26,7 +26,7 @@ public class UserOrganizModel extends Model<UserOrganizModel>{
 	 * @return
 	 */
 	public List<UserOrganizModel> findAll(){
-		return findAll(null);
+		return findAll("order by sort_order1");
 	}
 	
 	/**

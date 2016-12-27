@@ -46,9 +46,9 @@ function loaddata(abc) {
                                     });
                                 }
                                 //未审批通过的都可修改
-                                var edit = item.apply_status != '1' && curr_user_organizid == item.cuser_organiz_id ? 'onProgress(this)' : '';
+                                var edit = item.apply_status != '1' && curr_user_organizid == item.cuser_organiz_id ? 'ondblclick = "onProgress(this)" title="双击修改办理进度" ' : '';
 
-                                element += '<tr style=" cursor:pointer; " data="' + item.progress_info_id + '" ondblclick="' + edit + '">';
+                                element += '<tr style=" cursor:pointer; " data="' + item.progress_info_id + '" '+edit + '>';
                                 element += '<td><p>' + item.cuser_organiz_name + '</p></td>';
                                 element += '<td><p class="status">' + formartDic(item.progress_info_status, 'CODE_HANDLE_STATIUS') + '</p><p>' + cdate + '</p></td>';
                                 element += '<td class="description"><p>' + con + '</p></td>';

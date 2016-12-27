@@ -56,7 +56,7 @@
 					class="layui-input">
 			</div>
 
-			<label class="layui-form-label">领导批示类型</label>
+			<label class="layui-form-label">批示类型</label>
 			<div class="layui-input-inline">
 				<select name="app_type" id="app_type">
 					<c:forEach items="${app_type}" var="item">

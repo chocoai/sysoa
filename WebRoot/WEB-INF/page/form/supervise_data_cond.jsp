@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="jsPlugin/layui/layui.js"></script>
 <link href='jsPlugin/layui/css/layui.css' rel=stylesheet />
 <link rel="stylesheet" type="text/css"
 	href="jsPlugin/semantic/semantic.min.css">
+<link href='css/form-style.css' rel='stylesheet' />
 <script src="jsPlugin/laydate/laydate.js"></script>
 <script src='js/jquery.min.js'></script>
-<link href='css/form-style.css' rel='stylesheet' />
+<script src="jsPlugin/layui/layui.js"></script>
+<script src="js/util.js"></script>
 <script src="jsPlugin/jqprint/jQuery.print.js"></script>
 </head>
 <body>
@@ -51,75 +52,6 @@
 </body>
 <script>
 
-
-(function ($) {  
-    $.fn.extend({  
-        //表格合并单元格，colIdx要合并的列序号，从0开始  
-        "rowspan": function (colIdx) {  
-            return this.each(function () {  
-                var that;  
-                $('tr', this).each(function (row) {  
-                    $('td:eq(' + colIdx + ')', this).filter(':visible').each(function (col) {  
-                        if (that != null && $(this).html() == $(that).html()) {  
-                            rowspan = $(that).attr("rowSpan");  
-                            if (rowspan == undefined) {  
-                                $(that).attr("rowSpan", 1);  
-                                rowspan = $(that).attr("rowSpan");  
-                            }  
-                            rowspan = Number(rowspan) + 1;  
-                            $(that).attr("rowSpan", rowspan);  
-                            $(this).hide();  
-                        } else {  
-                            that = this;  
-                        }  
-                    });  
-                });  
-            });  
-        }  
-    });  
-  
-})(jQuery);  
-//日期格式化
-Date.prototype.format = function(format) {  
-    /* 
-     * eg:format="yyyy-MM-dd hh:mm:ss"; 
-     */  
-    var o = {  
-        "M+" : this.getMonth() + 1, // month  
-        "d+" : this.getDate(), // day  
-        "h+" : this.getHours(), // hour  
-        "m+" : this.getMinutes(), // minute  
-        "s+" : this.getSeconds(), // second  
-        "q+" : Math.floor((this.getMonth() + 3)/3), // quarter  
-        "S" : this.getMilliseconds()  
-        // millisecond  
-    }  
-  
-    if (/(y+)/.test(format)) {  
-        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4  
-                        - RegExp.$1.length));  
-    }  
-  
-    for (var k in o) {  
-        if (new RegExp("(" + k + ")").test(format)) {  
-            format = format.replace(RegExp.$1, RegExp.$1.length == 1  
-                            ? o[k]  
-                            : ("00" + o[k]).substr(("" + o[k]).length));  
-        }  
-    }  
-    return format;  
-}  
-//周数
-function getYearWeek(date){  
-    var date2=new Date(date.getFullYear(), 0, 1);  
-    var day1=date.getDay();  
-    if(day1==0) day1=7;  
-    var day2=date2.getDay();  
-    if(day2==0) day2=7;  
-    d = Math.round((date.getTime() - date2.getTime()+(day2-day1)*(24*60*60*1000)) / 86400000);    
-    return Math.ceil(d /7)+1;   
-} ;
-
 	layui.use(['form', 'laydate', 'element'], function() {
 		var form = layui.form(), element = layui.element();
 	});
@@ -128,49 +60,87 @@ function getYearWeek(date){
 	var render = function(res){
         var ele = '';
 		if(res){
-				$(res.page.list).each(function(j, jtem){
-						
-						var s = new Date(jtem.START.replace(/-/g,"/"))
-						var e = new Date(jtem.END.replace(/-/g,"/")) 
+				$(res).each(function(j, jtem){
+						var sum = jtem.sum == null ? '':jtem.sum;
+						var done = jtem.done == null ? '':jtem.done;
+						var doing = jtem.doing == null ? '':jtem.doing;
 						ele += "<tr>";
-						ele += '<td >'+jtem.LEADERNAME+'</td>';
-						ele += '<td >'+s.format('MM月dd日 hh:mm')+'-'+e.format('MM月dd日 hh:mm')+'</td>';
-						ele += '<td >'+jtem.SUBJECT+'</td>';
-						ele += '<td >'+jtem.SCH_POSITION+'</td>';
-						ele += '<td ></td>';
+						ele += '<td >'+formartDic(jtem.user_organiz_type, 'CODE_ORGANIZ_TYPE')+'</td>';
+						ele += '<td >'+jtem.user_organiz_name+'</td>';
+						ele += '<td >'+sum +'</td>';
+						ele += '<td >'+done+'</td>';
+						ele += '<td >'+doing +'</td>';
+						ele += '<td > </td>';
 						ele += "</tr>";
 				});
 		}
 		
-		$('.layui-table tbody').html(ele);
+		$('#supervise_list01 tbody').html(ele);
 		
 		//合并单元格
-         $('.layui-table').rowspan(0);
+        $('#supervise_list01 tbody').rowspan(0);
 	};
 	
-	var _render = function(){
-		
-		
+	var _render = function(res){
+		  var ele = '';
+			if(res){
+					$(res.list).each(function(j, jtem){
+							j=j+1;
+							ele += "<tr>";
+							ele += '<td >'+j+'</td>';
+							ele += '<td >'+new Date(jtem.rec_time).format("MM月dd日")+'</td>';
+							ele += '<td >'+formartDic(jtem.rec_organiz_id, 'CODE_REC_ORGANIZS')+'</td>';
+							ele += '<td >'+jtem.rec_sno+'</td>';
+							ele += '<td >'+jtem.info_title+'</td>';
+							ele += '<td >'+jtem.info_con+'</td>';
+							ele += '<td >'+_organiz(jtem.require_organiz_id)+'</td>';
+							ele += '<td >'+formartDic(jtem.info_type, 'CODE_EVENT_SUPERVISE')+'</td>';
+							ele += '<td >'+formartDic(jtem.progress_status, 'CODE_HANDLE_STATIUS')+'</td>';
+							var _con = findprogressinfo(jtem.progress_id);
+							ele += '<td >'+_con+'</td>';
+							ele += "</tr>";
+					});
+			}
+			
+			$('#supervise_list02 tbody').html(ele);
 	};
-	
+	function findprogressinfo(progress_id){
+		$.ajaxSettings.async = false;
+		var con = '';
+		$.getJSON("supervise/progress/info/query3", { num:1, size:100000, progress_id: progress_id }, function(data){
+			$(data.list).each(function(i, item){
+				con += '<p>'+ item.progress_info_con +'</p>';
+			});
+		});
+		return con;
+	}
 	function findCondiction(){ 
 		layui.use('layer', function() {
+			
 			var layer = layui.layer;
-			var abc = layer.load(0, { time: 10 * 1000 });
+			var abc = "";
 			
 			if($('#start').val() && $('#end').val()){
-				var start = new Date($('#start').val().replace(/-/g,"/"));
-				var end = new Date($('#end').val().replace(/-/g,"/"));	
-				
+				 abc = layer.load(0, { time: 10 * 1000 });
+				/* var start = new Date($('#start').val().replace(/-/g,"/"));
+				var end = new Date($('#end').val().replace(/-/g,"/"));	 */
 				//var fs = new Date($('#start').val());
 				//var fe = new Date($('#end').val());
-				
-				var str = getYearWeek(start);
-				$('table caption').text(start.getFullYear()+'年 第'+str+'周  ('+start.format('MM月dd日 ')+'至'+end.format('MM月dd日')+')');
-				 
-				$.getJSON("leaderSchedule/oneweektable", { num:1, size:100, start:Math.round(start.getTime()/1000), end:Math.round(end.getTime()/1000)}, function(data){
+				var start = $('#start').val();
+				var end = $('#end').val();
+				//var str = getYearWeek(start);
+				//$('table caption').text(start.getFullYear()+'年 第'+str+'周  ('+start.format('MM月dd日 ')+'至'+end.format('MM月dd日')+')');
+				 //start:Math.round(start.getTime()/1000)
+				$.getJSON("supervise/info/getcountfororganiz", {start:start, end:end}, function(data){
 					
 					render(data);
+					
+					layer.close(abc);
+					
+				});
+				$.getJSON("supervise/info/getcountforall", { num:1, size:100000, start:start, end:end}, function(data){
+					
+					_render(data);
 					
 					layer.close(abc);
 					
@@ -183,10 +153,15 @@ function getYearWeek(date){
 			}
 		});
 	}
+	function _isnan(ct) {
+	    if (ct == 'NaN' || ct == '' || ct == 'underfined') {
+	        return null;
+		}
+	}
 	
+
 	/**jqprint 实现网页局部打印
 	 ***/
-	//<![CDATA[
 	    function JQprint() {
 	        //Print ele4 with custom options
 	        $(".print").print({
@@ -194,6 +169,7 @@ function getYearWeek(date){
 	            globalStyles: true,
 	            //Add link with attrbute media=print
 	            mediaPrint: true,
+	            //importCSS: true,
 	            //Custom stylesheet
 	            //stylesheet : $('#basepath').val()+"css/login.jsp.css",
 	            //Print in a hidden iframe
@@ -206,8 +182,6 @@ function getYearWeek(date){
 	            //append: '<br/><footer align="center">兰州市公安局</footer>'
 	        });
 	    };
-	    // Fork https://github.com/sathvikp/jQuery.print for the full list of options
-	//]]>
-	
+	    // Fork https://github.com/sathvikp/jQuery.print for the full list of options	
 </script>
 </html>

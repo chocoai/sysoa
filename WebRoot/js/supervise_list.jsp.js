@@ -21,14 +21,18 @@ var render = function(res, curr, nums) {
 
             var _neio = '';
             var neio = '';
-            var approval_flag_ele   
-            if(userflag =='A') {
+            var approval_flag_ele1 = '';  
+            var approval_flag_ele2 = '';
+            //判断当前用户是否是在督办工作的承办单位
+            var _flag_o_t = news.require_organiz_id.indexOf(organizid+',');
+            if(_flag_o_t !=-1){
+            
+            	approval_flag_ele1 =  _findApprovalStatus(news.progress_id) ? '<div class="layui-btn layui-btn-danger layui-btn-mini">已拒绝</div>':'';
+            
+            }
+            if(userflag =='M'){
             	
-            	approval_flag_ele =  _findApprovalStatus(news.progress_id) ? '<div class="ui red ribbon label"><p>以拒绝</p></div>':'';
-           
-            }else if(userflag =='M'){
-            	
-            	approval_flag_ele =  _findApproval_Status(news.progress_id) ? '<div class="ui red ribbon label"><p>待审批</p></div>':'';
+            	approval_flag_ele2 =  _findApproval_Status(news.progress_id) ? '<div class="layui-btn layui-btn-warm layui-btn-mini">待审批</div>':'';
             }
             
             if (news.isfinish !=='2') {
@@ -45,8 +49,8 @@ var render = function(res, curr, nums) {
             	_neio = 'background-color: #5FB878 !important ;';
             }*/
             
-            element += '<tr class="'+neio+'" style=" cursor:pointer; " data="' + news.info_id + '" ondblclick="ondetail(this)" title="双击修改办理进度">';
-            element += '        <td>'+approval_flag_ele+'<p>' +sno1+ '</p></div></td>';
+            element += '<tr class="'+neio+'" style=" cursor:pointer; " data="' + news.info_id + '" ondblclick="ondetail(this)" title="双击查看详情">';
+            element += '        <td><span>' +sno1+ '</span>'+approval_flag_ele1+approval_flag_ele2+'</td>';
             element += '        <td><p>' + news.rec_time.substr(0,10) + '</p></div></td>';
             element += '        <td><p>' + formartDic(news.rec_organiz_id, 'CODE_REC_ORGANIZS') + '</p></div></td>';/*_organiz(news.rec_organiz_id)*/
             element += '        <td><p>' + news.rec_sno + '</p></div></td>';
@@ -69,14 +73,18 @@ var render = function(res, curr, nums) {
             var dis1 = news.progress_status == 'HANDLE_STATIUS_02' ? 'disabled' : '';
             if(news.isfinish !='2'){
 	            if (userflag == 'M') {
-	            	
+	            	 if(_flag_o_t !=-1){
+
+			                element += '<button class="layui-btn  layui-btn-normal ' + dis + '"  ' + dis1 + ' data="' + news.progress_id + '" onclick="onProgress(this)">工作进展</button>';
+			         
+		                }
 	                var _dis = news.progress_status == 'HANDLE_STATIUS_02' && news.isfinish != '2' ? '' : 'layui-disabled';
 	                var _dis1 = news.progress_status == 'HANDLE_STATIUS_02' && news.isfinish != '2' ? '' : 'disabled title="工作未完成" ';
-	                element += '<button class="layui-btn layui-btn-mini layui-btn-normal ' + _dis + '"  ' + _dis1 + ' data="' + news.info_id + '" onclick="onfinish(this)">完成</button>';
-	           
+	                element += '<button class="layui-btn  layui-btn-normal ' + _dis + '"  ' + _dis1 + ' data="' + news.info_id + '" onclick="onfinish(this)">完成</button>';
+	               
 	            } else if (userflag == 'A') {
 	
-	                element += '<button class="layui-btn layui-btn-mini layui-btn-normal ' + dis + '"  ' + dis1 + ' data="' + news.progress_id + '" onclick="onProgress(this)">更新工作进展</button>';
+	                element += '<button class="layui-btn  layui-btn-normal ' + dis + '"  ' + dis1 + ' data="' + news.progress_id + '" onclick="onProgress(this)">工作进展</button>';
 	            }
             }else if(news.isfinish =='2'){
             	 element += '<p>' + news.supervise_info_con + '</p>';
@@ -623,7 +631,7 @@ function onProgress(dom) {
     layui.use("layer", function() {
         var layer = layui.layer;
         layer.open({
-            title: '更新工作进展',
+            title: '添加工作进展记录',
             area: ['550px', '480px'],
             skin: 'layui-layer-lan',
             type: 2,
