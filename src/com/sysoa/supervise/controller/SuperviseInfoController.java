@@ -192,6 +192,20 @@ public class SuperviseInfoController extends Controller {
 		renderJson(SuperviseInfo.dao.querybycondition(getParaToInt("num"), getParaToInt("size"), con));
 		
 	}
+	public void _getAll3Supervise(){
+		
+		Map<String, Object> con = new HashMap<String, Object>();
+		
+		String start = getPara("start");
+		String end = getPara("end");
+		
+		if(start !=null	&& start.length()>0){con.put("start", start);}else{con.put("start", null);}
+			
+		if(end !=null && end.length()>0){con.put("end", end);}else{con.put("end", null);}
+		
+		renderJson(SuperviseInfo.dao.querybycondition(getParaToInt("num"), getParaToInt("size"), getSessionAttr("organizid"), con));
+		
+	}
 
 	public void getAll4Supervise(){
 		
