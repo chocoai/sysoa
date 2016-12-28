@@ -85,7 +85,7 @@ layui.use([ 'form', 'laydate', 'upload', 'layer' ], function() {
 			layer.close(abc);
 			if(_urlval){_urlval += ',';}
 			_urlval += res.url;
-			 _file += '<p><i class="file text blue semll icon"></i><span>'+res.filename+'</span><i class="close icon" style="position: absolute; cursor: pointer;color: black;" title="删除" data="'+res.url+'"></i></p>';
+			 _file += '<p style="margin:0px;"><i class="file text blue semll icon"></i><span>'+res.filename+'</span><i class="Remove Circle close icon" style="position: absolute; cursor: pointer;color: black;" title="删除" data="'+res.url+'"></i></p>';
 			$('#info_file').val(_urlval);
 			$('#image_segment #file').html(_file);
 			initform();
@@ -107,7 +107,7 @@ layui.use([ 'form', 'laydate', 'upload', 'layer' ], function() {
 			layer.close(abc);
 			if(urlval){urlval+=',';}
 			urlval += res.url;
-			imgele += '<div><img src="'+res.url+'" alt="..."><i class="close icon" style="position: absolute; cursor: pointer;color: black;" title="删除" data="'+res.url+'"></i></div>';
+			imgele += '<div style="float:left;" ><img src="'+res.url+'" alt="..."><i class="Remove Circle close icon" style="position: relative; cursor: pointer;color: black;left: -1em;top: -1.5em;" title="删除" data="'+res.url+'"></i></div>';
 			$('#info_img').val(urlval);
 			$('#image_segment #img').html(imgele);
 			initform();

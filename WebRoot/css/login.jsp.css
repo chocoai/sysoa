@@ -94,7 +94,8 @@ table tr p {
 }
 
 table {
-	border-color: #1b1c1d !important;
+	border-top-color: #1b1c1d !important;
+    border-left-color:#1b1c1d !important;
 }
 
 .table tr:hover td {

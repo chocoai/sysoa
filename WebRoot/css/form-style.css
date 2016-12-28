@@ -13,6 +13,7 @@
 #img img {
 	height: 4em;
 }
+
 span {
 	background-color: #d4d4d5;
     color: black !important;
@@ -52,7 +53,16 @@ span {
 #laydate_ys {
 	overflow: hidden;
 }
-
+#addprogress #image_segment .list {
+	margin: 0px;
+	padding: 0px;
+	width: 50%;
+}
+#addprogress #image_segment .list #img {
+    width: 100%;
+    float: left;
+    clear: both;
+}
 @media print {
 	.form-div .layui-tab-item table {
 		border-left: 1px solid black !important;

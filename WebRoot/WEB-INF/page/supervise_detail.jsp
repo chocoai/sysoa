@@ -87,7 +87,7 @@
 			<div id="list">
 
 				<table class="ui celled table">
-					<caption>
+					<caption style=" font-size: 1.3em;line-height: 3em;">
 						<strong>各部门办理详情</strong>
 					</caption>
 					<thead>
@@ -95,7 +95,7 @@
 							<th>办理部门</th>
 							<th>办理进度(日期)</th>
 							<th width="30%">办理情况</th>
-							<th>上报材料/(类型)/相关图片</th>
+							<th>上报材料</th>
 							<th>审批状态</th>
 							<th>审批部门/(日期)</th>
 							<th class="no-print">操作</th>

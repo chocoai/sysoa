@@ -37,12 +37,16 @@ function loaddata(abc) {
 
                                 if (item.progress_info_img) {
                                     $(item.progress_info_img.split(',')).each(function(i, jt) {
+                                    	if(jt){
                                         imagelist += '<img src="' + jt + '" style="height: 2em;cursor: pointer;" title="点击查看大图">';
+                                    	}
                                     });
                                 }
                                 if (item.progress_info_url) {
                                     $(item.progress_info_url.split(',')).each(function(i, jt) {
+                                    	if(jt){
                                         fileList += '<i class="file text blue small icon"></i><a data-url="' + jt + '" title="预览" onclick="lookfile(this)" style="cursor: pointer;">' + jt.substr(27, info_url.length) + ' </a>';
+                                    	}
                                     });
                                 }
                                 //未审批通过的都可修改
@@ -54,7 +58,7 @@ function loaddata(abc) {
                                 element += '<td class="description"><p>' + con + '</p></td>';
                                 element += '<td><p>' + formartDic(item.progress_info_url_type, 'CODE_REPORT_MATERIAL_TYPE') + '</p>';
                                 element += fileList;
-                                element += imagelist ? '<div class="ui segment">' + '  <p>相关图片</p>' + '  <div class="image imagelist">' + imagelist + '  </div>' + '</div>' : '';
+                                element += imagelist ? '<div class="ui basic segment">' + '  <p>相关图片</p>' + '  <div class="image imagelist">' + imagelist + '  </div>' + '</div>' : '';
                                 element += '</td>';
 
                                 element += '<td><p class="apply-status">' + icon + formartDic(item.apply_status, 'CODE_APPROVAL') + '</p></td>';
@@ -409,13 +413,17 @@ function onProgress(dom) {
                             var _img = '';
                             if (data.progress_info_url) {
                                 $(data.progress_info_url.split(',')).each(function(i, item) {
-                                    _file += '<p><i class="file text blue semll icon"></i><span >' + item.substr(27, item.length) + '</span><i class="close icon" style="position: absolute; cursor: pointer;color: black;" title="删除" data="' + item + '"></i></p>';
+                                	if(item){
+                                    _file += '<p style="margin:0px;" ><i class="file text blue semll icon"></i><span >' + item.substr(27, item.length) + '</span><i class="Remove Circle close icon" style="position: absolute; cursor: pointer;color: black;" title="删除" data="' + item + '"></i></p>';
+                                	}
                                 });
                             }
 
                             if (data.progress_info_img) {
                                 $(data.progress_info_img.split(',')).each(function(i, item) {
-                                    _img += '<div><img src="' + item + '" alt="..."><i class="close icon" style="position: absolute; cursor: pointer;color: black;" title="删除" data="' + item + '"></i></div>';
+                                	if(item){
+                                    _img += '<div style="float:left"><img src="' + item + '" alt="..."><i class=" Remove Circle close icon" style="position: relative; cursor: pointer;color: black;left: -1em;top: -1.5em;" title="删除" data="' + item + '"></i></div>';
+                                	}
                                 });
                             }
                             body.find('#addprogress #image_segment #file').html(_file);

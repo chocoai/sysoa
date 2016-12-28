@@ -3,7 +3,7 @@
 <div class="ui segment">
     <form class="layui-form layui-form-pane layui-box">
 	    <div class="layui-form-item">
-		    <label class="layui-form-label">范围选择</label>
+		    <label class="layui-form-label">选择日期</label>
 		    <div class="layui-input-inline">
 		      <input class="layui-input" id="start" placeholder="开始日" onclick="layui.laydate({elem: this, istime: false, format: 'YYYY-MM-DD'})">
 		    </div>
@@ -26,7 +26,8 @@
 			<th>承办单位</th>
 			<th>类型</th>
 			<th>办理进度</th>
-			<th>操作</th>
+			<th width="15%">领导批示上报</th>
+			<th>备注</th>
 		</tr>
 	</thead>
 	<tbody id="demo801">

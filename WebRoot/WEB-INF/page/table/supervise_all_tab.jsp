@@ -13,7 +13,8 @@
 			<th>承办单位</th>
 			<th>类型</th>
 			<th>办理进度</th>
-			<th>操作</th>
+			<th width="15%">领导批示上报</th>
+			<th>备注</th>
 		</tr>
 	</thead>
 	<tbody id="demo802">

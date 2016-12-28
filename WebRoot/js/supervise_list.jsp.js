@@ -66,7 +66,12 @@ var render = function(res, curr, nums) {
 
             // element += '<td>' + news.cdate + '</td>';
             //element += '<td>' + formartDic(news.require_finish_limit, 'CODE_HANDLE_LIMIT') + '</td>';
-            
+           
+            element += '        <td>';
+            if(news.isfinish =='2'){
+           	 	element += '<p style="word-wrap: break-word;word-break: break-all;">' + news.supervise_info_con + '</p>';
+            }
+            element += '</td>';
             element += '        <td>';
            // element += '        <td>   <div>' + '<button class="layui-btn layui-btn-mini" data="' + news.info_id + '" onclick="ondetail(this)">查看详情</button>';
             var dis = news.progress_status == 'HANDLE_STATIUS_02' ? 'layui-disabled' : '';
@@ -86,8 +91,6 @@ var render = function(res, curr, nums) {
 	
 	                element += '<button class="layui-btn  layui-btn-normal ' + dis + '"  ' + dis1 + ' data="' + news.progress_id + '" onclick="onProgress(this)">工作进展</button>';
 	            }
-            }else if(news.isfinish =='2'){
-            	 element += '<p>' + news.supervise_info_con + '</p>';
             }
           /*  if (userid == news.cuser_id) {
                 element += '<button class="layui-btn layui-btn-normal ' + dis + '"  ' + dis1 + '  data="' + news.info_id + '" onclick="onedit(this)">修改</button>';
@@ -160,7 +163,8 @@ function loaddata01(abc, start, end) {
     var userflag = $('#flag').val();
     var organizid = $('#organizid').val();
 
-    var resUrl = 'supervise/info/getAll3Supervise'
+    //var resUrl = 'supervise/info/getAll3Supervise'
+    var resUrl = userflag == 'M' ? 'supervise/info/getAll3Supervise' : 'supervise/info/_getAll3Supervise'
     var nums = 5; // 每页出现的数据量
 
     var ajDate = $

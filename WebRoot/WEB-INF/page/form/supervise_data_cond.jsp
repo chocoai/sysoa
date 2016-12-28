@@ -20,7 +20,7 @@
 		<div class="ui segment no-print">
 			<form class="layui-form layui-form-pane layui-box">
 				<div class="layui-form-item">
-					<label class="layui-form-label">日期范围</label>
+					<label class="layui-form-label">选择日期</label>
 					<div class="layui-input-inline">
 						<input class="layui-input" id="start" placeholder="开始日"
 							onclick="layui.laydate({elem: this, istime: false, format: 'YYYY-MM-DD'})">
@@ -36,16 +36,17 @@
 
 		<div class="layui-tab layui-tab-brief">
 			<ul class="layui-tab-title">
-				<li class="layui-this">来文单位</li>
-				<li>承办单位</li>
+				<li class="layui-this">承办单位</li>
+				<li>来文单位</li>
 			</ul>
 			<div class="layui-tab-content print">
 				<div class="layui-tab-item layui-show">
-					<jsp:include page="../table/supervise_data_rec.jsp"></jsp:include>
-				</div>
-				<div class="layui-tab-item print">
 					<jsp:include page="../table/supervise_data_require.jsp"></jsp:include>
 				</div>
+				<div class="layui-tab-item ">
+					<jsp:include page="../table/supervise_data_rec.jsp"></jsp:include>
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -86,9 +87,10 @@
 			if(res){
 					$(res.list).each(function(j, jtem){
 							j=j+1;
+							var d = new Date(Date.parse(jtem.rec_time.replace(/-/g,"/"))).format("MM月dd日");
 							ele += "<tr>";
 							ele += '<td >'+j+'</td>';
-							ele += '<td >'+new Date(jtem.rec_time).format("MM月dd日")+'</td>';
+							ele += '<td >'+d+'</td>';
 							ele += '<td >'+formartDic(jtem.rec_organiz_id, 'CODE_REC_ORGANIZS')+'</td>';
 							ele += '<td >'+jtem.rec_sno+'</td>';
 							ele += '<td >'+jtem.info_title+'</td>';
@@ -109,7 +111,7 @@
 		var con = '';
 		$.getJSON("supervise/progress/info/query3", { num:1, size:100000, progress_id: progress_id }, function(data){
 			$(data.list).each(function(i, item){
-				con += '<p>'+ item.progress_info_con +'</p>';
+				con += '<p style="word-wrap: break-word;word-break: break-all;">'+ item.progress_info_con +'</p>';
 			});
 		});
 		return con;
